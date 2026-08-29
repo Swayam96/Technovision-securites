@@ -55,24 +55,6 @@
   </div>
 </div>
 
-<div class="card card-outline card-info mb-3">
-  <div class="card-header">
-    <h3 class="card-title"><i class="fas fa-project-diagram mr-1"></i> Job pipeline</h3>
-  </div>
-  <div class="card-body">
-    <p class="text-muted">Work moves in this order. Advance a record to hand it to the next team.</p>
-    <ol class="pipeline">
-      {% for stage in pipeline %}
-      <li class="{% if stage in nav_ids %}is-mine{% endif %}">
-        <span class="step">{{ loop.index }}</span>
-        <strong>{{ pipeline_labels[stage] }}</strong>
-        <small>{{ module_by_id[stage].title }}</small>
-      </li>
-      {% endfor %}
-    </ol>
-  </div>
-</div>
-
 <div class="row">
   <div class="col-lg-8">
     <div class="card card-outline card-primary">
