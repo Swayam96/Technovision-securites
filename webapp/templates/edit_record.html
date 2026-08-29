@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{% if can_write %}Edit{% else %}View{% endif %} · {{ fn.title }}{% endblock %}
+
+{% block page_header %}
+<div class="row mb-2">
+  <div class="col-sm-6">
+    <h1 class="m-0">{% if can_write %}Edit{% else %}View{% endif %} {{ fn.title }}</h1>
+  </div>
+  <div class="col-sm-6">
+    <ol class="breadcrumb float-sm-right">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/modules/{{ module.id }}">{{ module.short }}</a></li>
+      <li class="breadcrumb-item"><a href="/modules/{{ module.id }}/{{ fn.id }}">{{ fn.title }}</a></li>
+      <li class="breadcrumb-item active">{% if can_write %}Edit{% else %}View{% endif %}</li>
+    </ol>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card card-primary card-outline">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-edit mr-1"></i> {{ fn.title }}</h3>
+      </div>
+      <form method="post" action="/modules/{{ module.id }}/{{ fn.id }}/records/{{ record['id'] }}" class="card-body">
+        {% include "partials/record_form.html" %}
+        {% if can_write %}
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+        {% if next_stage and record['status'] != 'Handed over' %}
+        <button type="submit" form="advance-form" class="btn btn-success"><i class="fas fa-share mr-1"></i> Send to {{ next_label }}</button>
+        {% endif %}
+        {% endif %}
+        <a href="/modules/{{ module.id }}/{{ fn.id }}" class="btn btn-default">Back</a>
+      </form>
+      {% if can_write and next_stage and record['status'] != 'Handed over' %}
+      <form id="advance-form" method="post" action="/modules/{{ module.id }}/{{ fn.id }}/records/{{ record['id'] }}/advance"></form>
+      {% endif %}
+      {% if trail %}
+      <div class="card-footer">
+        <strong>Pipeline history</strong>
+        <ul class="mb-0 mt-2 pl-3">
+          {% for t in trail %}
+          <li>{{ pipeline_labels.get(t['module_id'], t['module_id']) }} — {{ t['entity'] }} ({{ t['status'] }})</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

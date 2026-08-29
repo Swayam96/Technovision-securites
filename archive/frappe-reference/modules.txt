@@ -1,0 +1,7 @@
+Organization Administration
+Product Master Data
+Sales Presales
+Purchase Procurement
+Projects Installation
+Inventory Logistics
+Service AMC

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Edit user · {{ app_name }}{% endblock %}
+
+{% block page_header %}
+<div class="row mb-2">
+  <div class="col-sm-6">
+    <h1 class="m-0">{{ person['full_name'] }}</h1>
+    <p class="text-muted mb-0">{{ person['username'] }}</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+{% if message %}
+<div class="alert alert-success">Saved.</div>
+{% endif %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card card-primary card-outline">
+      <form method="post" action="/admin/users/{{ person['id'] }}" class="card-body">
+        <div class="form-group">
+          <label>Full name</label>
+          <input type="text" name="full_name" class="form-control" required value="{{ person['full_name'] }}" />
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <select name="role_id" class="form-control" required>
+            {% for r in roles %}
+            <option value="{{ r.id }}" {% if r.id == person['role_id'] %}selected{% endif %}>{{ r.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" value="1" {% if person['is_active'] %}checked{% endif %} />
+            <label class="custom-control-label" for="is_active">Active</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Reset temporary password</label>
+          <input type="text" name="password" class="form-control" minlength="4" placeholder="Leave blank to keep current" />
+          <small class="text-muted">If set, the user must choose a new password on next login.</small>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="reset_defaults" name="reset_defaults" value="1" />
+            <label class="custom-control-label" for="reset_defaults">Reset Read/Write access to this role’s defaults</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        {% if user.can_manage_permissions %}
+        <a href="/admin/users/{{ person['id'] }}/permissions" class="btn btn-default">Access matrix</a>
+        {% endif %}
+        <a href="/admin/users" class="btn btn-default">Back</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

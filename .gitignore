@@ -1,0 +1,8 @@
+webapp/.venv/
+webapp/__pycache__/
+webapp/data/*.db
+webapp/tmp/
+webapp/.env
+**/.env
+**/__pycache__/
+*.pyc

@@ -1,0 +1,98 @@
+/* Technovision brand overrides — matches tecsec.technovisionsecurities.in */
+
+:root {
+  --tv-primary: #03a9f4;
+  --tv-primary-dark: #039be5;
+}
+
+body {
+  font-family: "Source Sans Pro", "Poppins", sans-serif;
+}
+
+.brand-link .brand-text {
+  font-size: 0.95rem;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active:hover {
+  background-color: var(--tv-primary);
+  color: #fff;
+}
+
+.btn-primary,
+.bg-primary,
+.small-box.bg-primary {
+  background-color: var(--tv-primary) !important;
+  border-color: var(--tv-primary-dark) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--tv-primary-dark) !important;
+  border-color: var(--tv-primary-dark) !important;
+}
+
+.card-primary.card-outline {
+  border-top-color: var(--tv-primary);
+}
+
+.small-box.bg-info {
+  background-color: var(--tv-primary) !important;
+}
+
+.content-wrapper {
+  background-color: #f4f6f9;
+}
+
+.brand-image {
+  max-height: 42px !important;
+  width: 42px;
+}
+
+.table img.rounded {
+  vertical-align: middle;
+}
+
+.pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pipeline li {
+  flex: 1 1 140px;
+  background: #f8fafc;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+}
+.pipeline li.is-mine {
+  border-color: #03a9f4;
+  background: #e8f7fd;
+}
+.pipeline .step {
+  display: inline-grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: #03a9f4;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-right: 0.3rem;
+}
+.pipeline small {
+  display: block;
+  color: #6c757d;
+}
+
+.nav-sidebar .nav-treeview > .nav-item > .nav-link p {
+  font-size: 0.9rem;
+}
+
+.perm-table td {
+  vertical-align: middle;
+}
