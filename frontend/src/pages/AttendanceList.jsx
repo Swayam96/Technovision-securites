@@ -18,7 +18,8 @@ export default function AttendanceList() {
   
   const navigate = useNavigate();
   const { data } = useOutletContext(); // global layout data
-  const isAdmin = data?.user?.is_admin || data?.user?.role_id === 'hr';
+  const roleId = data?.user?.role_id;
+  const isAdmin = roleId === 'admin' || roleId === 'hr' || data?.user?.username === 'admin';
 
   useEffect(() => {
     if (view === 'team' && !isAdmin) {

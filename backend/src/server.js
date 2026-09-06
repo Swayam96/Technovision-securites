@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -68,6 +69,14 @@ app.get('/health', async (req, res) => {
     } catch (e) {
         res.json({ status: 'error', app: 'Technovision Security', database: 'error' });
     }
+});
+
+// Serve frontend in production
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+
+// Catch-all route to serve React's index.html for client-side routing
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
