@@ -1,1 +1,0 @@
-"""Technovision ERP application package."""

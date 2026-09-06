@@ -1,8 +1,10 @@
 webapp/.venv/
 webapp/__pycache__/
 webapp/data/*.db
+webapp/data/employee_docs/
 webapp/tmp/
 webapp/.env
 **/.env
 **/__pycache__/
 *.pyc
+**/node_modules/

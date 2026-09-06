@@ -1,0 +1,398 @@
+[
+    {
+        "id": "organization-administration",
+        "title": "Organization & Administration",
+        "short": "Org",
+        "icon": "organization_administration.svg",
+        "fa_icon": "fas fa-building",
+        "blurb": "Company structure, employees, users, and access.",
+        "functions": [
+            {
+                "id": "company",
+                "title": "Company"
+            },
+            {
+                "id": "branches",
+                "title": "Branches"
+            },
+            {
+                "id": "departments",
+                "title": "Departments"
+            },
+            {
+                "id": "designations",
+                "title": "Designations"
+            },
+            {
+                "id": "roles",
+                "title": "Roles"
+            },
+            {
+                "id": "users",
+                "title": "Users"
+            },
+            {
+                "id": "permissions",
+                "title": "Permissions"
+            },
+            {
+                "id": "employee-master",
+                "title": "Employee Master"
+            },
+            {
+                "id": "employee-profile",
+                "title": "Employee Profile"
+            }
+        ]
+    },
+    {
+        "id": "hrms",
+        "title": "HRMS",
+        "short": "HRMS",
+        "icon": "hrms.svg",
+        "fa_icon": "fas fa-user-clock",
+        "blurb": "Attendance, leave, shifts, overtime, payroll, and expenses.",
+        "functions": [
+            {
+                "id": "attendance",
+                "title": "Attendance"
+            },
+            {
+                "id": "leave",
+                "title": "Leave"
+            },
+            {
+                "id": "shift",
+                "title": "Shift"
+            },
+            {
+                "id": "overtime",
+                "title": "OT"
+            },
+            {
+                "id": "payroll",
+                "title": "Payroll"
+            },
+            {
+                "id": "expenses",
+                "title": "Expenses"
+            }
+        ]
+    },
+    {
+        "id": "product-master-data",
+        "title": "Product & Master Data",
+        "short": "Products",
+        "icon": "inventory_logistics.svg",
+        "fa_icon": "fas fa-boxes",
+        "blurb": "Item catalog, brands, attributes, and SKUs.",
+        "functions": [
+            {
+                "id": "categories",
+                "title": "Product Categories / Item Groups"
+            },
+            {
+                "id": "brands",
+                "title": "Brands"
+            },
+            {
+                "id": "attributes",
+                "title": "Item Attributes"
+            },
+            {
+                "id": "uom",
+                "title": "UOM"
+            },
+            {
+                "id": "sku",
+                "title": "SKU / Item Master"
+            },
+            {
+                "id": "product-import",
+                "title": "Product Import"
+            }
+        ]
+    },
+    {
+        "id": "sales-presales",
+        "title": "Sales & Presales",
+        "short": "Sales",
+        "icon": "presales_boq.svg",
+        "fa_icon": "fas fa-handshake",
+        "blurb": "Leads, surveys, BOQ, costing, and quotations.",
+        "functions": [
+            {
+                "id": "client-enrollment",
+                "title": "Client / Customer Enrollment"
+            },
+            {
+                "id": "lead",
+                "title": "Lead"
+            },
+            {
+                "id": "enquiry",
+                "title": "Enquiry"
+            },
+            {
+                "id": "site-survey",
+                "title": "Site Survey"
+            },
+            {
+                "id": "requirement",
+                "title": "Requirement"
+            },
+            {
+                "id": "boq-builder",
+                "title": "BOQ Builder"
+            },
+            {
+                "id": "costing",
+                "title": "Costing"
+            },
+            {
+                "id": "margin",
+                "title": "Margin"
+            },
+            {
+                "id": "approval",
+                "title": "Management Approval"
+            },
+            {
+                "id": "quotation",
+                "title": "Quotation"
+            }
+        ]
+    },
+    {
+        "id": "purchase-procurement",
+        "title": "Purchase & Procurement",
+        "short": "Buy",
+        "icon": "purchase_procurement.svg",
+        "fa_icon": "fas fa-shopping-cart",
+        "blurb": "Vendors, requisitions, RFQs, and purchase orders.",
+        "functions": [
+            {
+                "id": "supplier",
+                "title": "Supplier / Vendor"
+            },
+            {
+                "id": "purchase-requisition",
+                "title": "Purchase Requisition"
+            },
+            {
+                "id": "rfq",
+                "title": "RFQ"
+            },
+            {
+                "id": "vendor-comparison",
+                "title": "Vendor Comparison"
+            },
+            {
+                "id": "purchase-order",
+                "title": "Purchase Order"
+            },
+            {
+                "id": "material-receipt",
+                "title": "Material Receipt"
+            }
+        ]
+    },
+    {
+        "id": "projects-installation",
+        "title": "Projects & Installation",
+        "short": "Projects",
+        "icon": "projects_installation.svg",
+        "fa_icon": "fas fa-hard-hat",
+        "blurb": "Project sites, tasks, technicians, and closure.",
+        "functions": [
+            {
+                "id": "project-master",
+                "title": "Project Master"
+            },
+            {
+                "id": "site-details",
+                "title": "Site / Project Details"
+            },
+            {
+                "id": "task-scheduler",
+                "title": "Task Scheduler"
+            },
+            {
+                "id": "task-assignment",
+                "title": "Task Assignment"
+            },
+            {
+                "id": "technician-allocation",
+                "title": "Technician Allocation"
+            },
+            {
+                "id": "project-status",
+                "title": "New / WIP / Completed"
+            },
+            {
+                "id": "installation-planning",
+                "title": "Installation Planning"
+            },
+            {
+                "id": "progress",
+                "title": "Progress"
+            },
+            {
+                "id": "terms",
+                "title": "T&C"
+            },
+            {
+                "id": "closure",
+                "title": "Closure"
+            }
+        ]
+    },
+    {
+        "id": "inventory-logistics",
+        "title": "Inventory & Logistics",
+        "short": "Stock",
+        "icon": "inventory_logistics.svg",
+        "fa_icon": "fas fa-warehouse",
+        "blurb": "Warehouses, stock moves, serials, and dispatch.",
+        "functions": [
+            {
+                "id": "warehouse",
+                "title": "Warehouse / Stores"
+            },
+            {
+                "id": "stock",
+                "title": "Stock"
+            },
+            {
+                "id": "stock-transfer",
+                "title": "Stock Transfer"
+            },
+            {
+                "id": "material-issue",
+                "title": "Material Issue"
+            },
+            {
+                "id": "material-return",
+                "title": "Material Return"
+            },
+            {
+                "id": "serial-batch",
+                "title": "Serial / Batch Tracking"
+            },
+            {
+                "id": "dispatch",
+                "title": "Dispatch / Logistics"
+            }
+        ]
+    },
+    {
+        "id": "service-amc",
+        "title": "Service & AMC",
+        "short": "AMC",
+        "icon": "service_amc.svg",
+        "fa_icon": "fas fa-tools",
+        "blurb": "Service calls, AMC, breakdowns, and closure.",
+        "functions": [
+            {
+                "id": "service-request",
+                "title": "Service Request"
+            },
+            {
+                "id": "service-call",
+                "title": "Service Call"
+            },
+            {
+                "id": "technician-assignment",
+                "title": "Technician Assignment"
+            },
+            {
+                "id": "preventive-maintenance",
+                "title": "Preventive Maintenance"
+            },
+            {
+                "id": "amc",
+                "title": "AMC"
+            },
+            {
+                "id": "breakdown",
+                "title": "Breakdown / Complaint"
+            },
+            {
+                "id": "service-closure",
+                "title": "Service Closure"
+            }
+        ]
+    },
+    {
+        "id": "assets-installed-base",
+        "title": "Assets / Installed Base",
+        "short": "Assets",
+        "icon": "inventory_logistics.svg",
+        "fa_icon": "fas fa-server",
+        "blurb": "Customer equipment, serials, warranty, and AMC history.",
+        "functions": [
+            {
+                "id": "customer-assets",
+                "title": "Customer Assets"
+            },
+            {
+                "id": "installed-equipment",
+                "title": "Installed Equipment"
+            },
+            {
+                "id": "serial-numbers",
+                "title": "Serial Numbers"
+            },
+            {
+                "id": "installation-history",
+                "title": "Installation History"
+            },
+            {
+                "id": "warranty",
+                "title": "Warranty"
+            },
+            {
+                "id": "amc-history",
+                "title": "AMC History"
+            }
+        ]
+    },
+    {
+        "id": "mis-management",
+        "title": "MIS & Management",
+        "short": "MIS",
+        "icon": "mis_management.svg",
+        "fa_icon": "fas fa-chart-line",
+        "blurb": "Dashboards and management MIS.",
+        "functions": [
+            {
+                "id": "sales-dashboard",
+                "title": "Sales Dashboard"
+            },
+            {
+                "id": "project-dashboard",
+                "title": "Project Dashboard"
+            },
+            {
+                "id": "service-dashboard",
+                "title": "Service Dashboard"
+            },
+            {
+                "id": "procurement-dashboard",
+                "title": "Procurement Dashboard"
+            },
+            {
+                "id": "inventory-dashboard",
+                "title": "Inventory Dashboard"
+            },
+            {
+                "id": "employee-productivity",
+                "title": "Employee Productivity"
+            },
+            {
+                "id": "management-mis",
+                "title": "Management MIS"
+            }
+        ]
+    }
+]
