@@ -41,12 +41,11 @@ async function punchCheckOut(employeeId, workDate, when) {
 
 async function listTeamAttendance(workDate) {
     return await fetchAll(`
-        SELECT e.id, e.employee_name, e.username, e.status, e.shift_type,
+        SELECT e.id, e.employee_name, e.username,
                a.check_in, a.check_out
         FROM employees e
         LEFT JOIN attendance_days a
           ON a.employee_id = e.id AND a.work_date = ?
-        WHERE e.status = 'Active'
         ORDER BY e.employee_name
     `, [workDate]);
 }

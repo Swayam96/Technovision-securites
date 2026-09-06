@@ -6,20 +6,25 @@ const { fetchOne } = require('../db');
 const dayjs = require('dayjs');
 
 async function authMiddleware(req, res, next) {
-    if (!req.session.user_id) return res.status(401).json({ error: 'Unauthorized' });
-    const user = await getUserById(req.session.user_id);
-    if (!user) return res.status(401).json({ error: 'Unauthorized' });
-    req.user = user;
-    
-    // Attach employee info
-    const emp = await fetchOne('SELECT id, employee_name, shift_type FROM employees WHERE user_id = ?', [user.id]);
-    if (emp) {
-        req.employeeId = emp.id;
-        req.employeeName = emp.employee_name;
-        req.employeeShiftType = emp.shift_type;
+    try {
+        if (!req.session.user_id) return res.status(401).json({ error: 'Unauthorized' });
+        const user = await getUserById(req.session.user_id);
+        if (!user) return res.status(401).json({ error: 'Unauthorized' });
+        req.user = user;
+        
+        // Attach employee info
+        const emp = await fetchOne('SELECT id, employee_name FROM employees WHERE user_id = ?', [user.id]);
+        if (emp) {
+            req.employeeId = emp.id;
+            req.employeeName = emp.employee_name;
+            req.employeeShiftType = 'General'; // Default to General since column doesn't exist
+        }
+        
+        next();
+    } catch (e) {
+        console.error('Auth middleware error:', e);
+        res.status(500).json({ error: 'Auth Error: ' + e.message });
     }
-    
-    next();
 }
 
 router.use(authMiddleware);
