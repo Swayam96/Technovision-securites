@@ -19,7 +19,8 @@ export default function AttendanceList() {
   const navigate = useNavigate();
   const { data } = useOutletContext(); // global layout data
   const roleId = data?.user?.role_id;
-  const isAdmin = roleId === 'admin' || roleId === 'hr' || data?.user?.username === 'admin';
+  // Support both string roles (React DB) and integer roles (Python DB)
+  const isAdmin = roleId === 'admin' || roleId === 'hr' || roleId === 1 || roleId === 2 || data?.user?.username === 'admin';
 
   useEffect(() => {
     if (view === 'team' && !isAdmin) {
@@ -45,6 +46,8 @@ export default function AttendanceList() {
       if (err.response?.status === 401) navigate('/login');
       else if (err.response?.data?.error === 'no-employee') {
         setError('Your login is not linked to Employee Master. Ask HR to create your employee record first.');
+      } else {
+        setError(err.response?.data?.error || err.message || 'Failed to load attendance data. Please contact support.');
       }
     } finally {
       setLoading(false);
