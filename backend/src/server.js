@@ -30,7 +30,8 @@ const { pool } = require('./db');
 app.use(session({
     store: new pgSession({
         pool: pool,
-        tableName: 'session'
+        tableName: 'session',
+        createTableIfMissing: true
     }),
     secret: process.env.SESSION_SECRET || 'technovision-erp-dev-secret-change-me',
     resave: false,
