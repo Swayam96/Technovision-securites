@@ -5,6 +5,19 @@ async function setupDatabase() {
   try {
     console.log("Creating tables...");
     
+    // 0. Session Table (for connect-pg-simple)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS "session" (
+        "sid" varchar NOT NULL COLLATE "default",
+        "sess" json NOT NULL,
+        "expire" timestamp(6) NOT NULL,
+        PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE
+      ) WITH (OIDS=FALSE);
+    `);
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON "session" ("expire");
+    `);
+
     // 1. Records
     await client.query(`
       CREATE TABLE IF NOT EXISTS records (

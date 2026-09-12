@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -111,14 +112,18 @@ export default function Login() {
               <div className="input-icon-wrapper">
                 <i className="fas fa-lock icon-left"></i>
                 <input 
-                  type="password" 
+                  type={showPassword ? "text" : "password"} 
                   name="password" 
                   placeholder="Enter your password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required 
                 />
-                <i className="far fa-eye icon-right show-pwd"></i>
+                <i 
+                  className={`far ${showPassword ? 'fa-eye-slash' : 'fa-eye'} icon-right show-pwd`} 
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{ cursor: 'pointer', pointerEvents: 'auto' }}
+                ></i>
               </div>
             </div>
             
