@@ -38,11 +38,22 @@ const createCrudEndpoints = (router, path, tableName, defaultMockData) => {
             const colRes = await pool.query(`SELECT column_name FROM information_schema.columns WHERE table_name = $1`, [tableName]);
             const allowedCols = colRes.rows.map(r => r.column_name);
             
+                        // HACK: Auto-map frontend generic fields to actual DB schema fields
+            const possibleIdCol = allowedCols.find(c => c.endsWith('_id') || c.endsWith('_code') || c.endsWith('_no'));
+            if (req.body.project_code && !allowedCols.includes('project_code') && possibleIdCol && possibleIdCol !== 'project_id' && possibleIdCol !== 'customer_id') {
+                req.body[possibleIdCol] = req.body.project_code;
+            }
+            const possibleNameCol = allowedCols.find(c => c.endsWith('_name') || c.includes('name'));
+            if (req.body.name && !allowedCols.includes('name') && possibleNameCol) {
+                req.body[possibleNameCol] = req.body.name;
+            }
+
             delete req.body.id;
             const keys = [];
             const values = [];
             for (const key of Object.keys(req.body)) {
                 if (allowedCols.includes(key)) {
+                    if (req.body[key] === '') continue; // Skip empty strings
                     keys.push(key);
                     values.push(req.body[key]);
                 }
@@ -66,11 +77,22 @@ const createCrudEndpoints = (router, path, tableName, defaultMockData) => {
             const colRes = await pool.query(`SELECT column_name FROM information_schema.columns WHERE table_name = $1`, [tableName]);
             const allowedCols = colRes.rows.map(r => r.column_name);
             
+                        // HACK: Auto-map frontend generic fields to actual DB schema fields
+            const possibleIdCol = allowedCols.find(c => c.endsWith('_id') || c.endsWith('_code') || c.endsWith('_no'));
+            if (req.body.project_code && !allowedCols.includes('project_code') && possibleIdCol && possibleIdCol !== 'project_id' && possibleIdCol !== 'customer_id') {
+                req.body[possibleIdCol] = req.body.project_code;
+            }
+            const possibleNameCol = allowedCols.find(c => c.endsWith('_name') || c.includes('name'));
+            if (req.body.name && !allowedCols.includes('name') && possibleNameCol) {
+                req.body[possibleNameCol] = req.body.name;
+            }
+
             delete req.body.id;
             const keys = [];
             const values = [];
             for (const key of Object.keys(req.body)) {
                 if (allowedCols.includes(key)) {
+                    if (req.body[key] === '') continue; // Skip empty strings
                     keys.push(key);
                     values.push(req.body[key]);
                 }
