@@ -80,7 +80,7 @@
         ]
     },
     {
-        "id": "product-master-data",
+        "id": "products",
         "title": "Product & Master Data",
         "short": "Products",
         "icon": "inventory_logistics.svg",
@@ -88,28 +88,48 @@
         "blurb": "Item catalog, brands, attributes, and SKUs.",
         "functions": [
             {
-                "id": "categories",
-                "title": "Product Categories / Item Groups"
+                "id": "dashboard",
+                "title": "Products Dashboard"
+            },
+            {
+                "id": "items",
+                "title": "Item Management"
+            },
+            {
+                "id": "item-groups",
+                "title": "Item Groups"
             },
             {
                 "id": "brands",
                 "title": "Brands"
             },
             {
+                "id": "uoms",
+                "title": "UOMs"
+            },
+            {
                 "id": "attributes",
                 "title": "Item Attributes"
             },
             {
-                "id": "uom",
-                "title": "UOM"
+                "id": "taxes",
+                "title": "Tax Templates"
             },
             {
-                "id": "sku",
-                "title": "SKU / Item Master"
+                "id": "suppliers",
+                "title": "Suppliers"
             },
             {
-                "id": "product-import",
+                "id": "price-lists",
+                "title": "Price Lists"
+            },
+            {
+                "id": "import",
                 "title": "Product Import"
+            },
+            {
+                "id": "settings",
+                "title": "Settings"
             }
         ]
     },
@@ -122,44 +142,40 @@
         "blurb": "Leads, surveys, BOQ, costing, and quotations.",
         "functions": [
             {
-                "id": "client-enrollment",
-                "title": "Client / Customer Enrollment"
+                "id": "dashboard",
+                "title": "Sales & Presales Dashboard"
             },
             {
-                "id": "lead",
-                "title": "Lead"
+                "id": "leads",
+                "title": "Lead Management"
             },
             {
-                "id": "enquiry",
-                "title": "Enquiry"
+                "id": "contacts",
+                "title": "Contact Management"
             },
             {
-                "id": "site-survey",
-                "title": "Site Survey"
+                "id": "customers",
+                "title": "Customer / Account Management"
             },
             {
-                "id": "requirement",
-                "title": "Requirement"
+                "id": "opportunities",
+                "title": "Opportunity Management"
             },
             {
-                "id": "boq-builder",
-                "title": "BOQ Builder"
+                "id": "quotations",
+                "title": "Quotation Management"
             },
             {
-                "id": "costing",
-                "title": "Costing"
+                "id": "boq-solutions",
+                "title": "BOQ / Solution Builder"
             },
             {
-                "id": "margin",
-                "title": "Margin"
+                "id": "sales-orders",
+                "title": "Sales Order Management"
             },
             {
-                "id": "approval",
-                "title": "Management Approval"
-            },
-            {
-                "id": "quotation",
-                "title": "Quotation"
+                "id": "reports",
+                "title": "Reports & Analytics"
             }
         ]
     },
@@ -172,28 +188,52 @@
         "blurb": "Vendors, requisitions, RFQs, and purchase orders.",
         "functions": [
             {
-                "id": "supplier",
-                "title": "Supplier / Vendor"
+                "id": "dashboard",
+                "title": "Module Dashboard"
             },
             {
-                "id": "purchase-requisition",
-                "title": "Purchase Requisition"
+                "id": "suppliers",
+                "title": "Suppliers"
             },
             {
                 "id": "rfq",
-                "title": "RFQ"
+                "title": "Request for Quotation"
             },
             {
-                "id": "vendor-comparison",
-                "title": "Vendor Comparison"
+                "id": "quotation-compare",
+                "title": "Quotation Comparison"
             },
             {
-                "id": "purchase-order",
-                "title": "Purchase Order"
+                "id": "purchase-orders",
+                "title": "Purchase Orders"
             },
             {
-                "id": "material-receipt",
-                "title": "Material Receipt"
+                "id": "grn",
+                "title": "Goods Receipt Notes"
+            },
+            {
+                "id": "invoices",
+                "title": "Purchase Invoices"
+            },
+            {
+                "id": "payments",
+                "title": "Payments to Suppliers"
+            },
+            {
+                "id": "returns",
+                "title": "Purchase Returns"
+            },
+            {
+                "id": "performance",
+                "title": "Supplier Performance"
+            },
+            {
+                "id": "reports",
+                "title": "Procurement Reports"
+            },
+            {
+                "id": "settings",
+                "title": "Settings & Master Data"
             }
         ]
     },
@@ -206,44 +246,44 @@
         "blurb": "Project sites, tasks, technicians, and closure.",
         "functions": [
             {
-                "id": "project-master",
-                "title": "Project Master"
+                "id": "dashboard",
+                "title": "Dashboard"
             },
             {
-                "id": "site-details",
-                "title": "Site / Project Details"
+                "id": "projects",
+                "title": "Projects"
             },
             {
-                "id": "task-scheduler",
-                "title": "Task Scheduler"
+                "id": "project-details",
+                "title": "Project Details"
             },
             {
-                "id": "task-assignment",
-                "title": "Task Assignment"
+                "id": "boq",
+                "title": "BOQ"
             },
             {
-                "id": "technician-allocation",
-                "title": "Technician Allocation"
+                "id": "tasks",
+                "title": "Tasks"
             },
             {
-                "id": "project-status",
-                "title": "New / WIP / Completed"
+                "id": "site-reports",
+                "title": "Site Reports"
             },
             {
-                "id": "installation-planning",
-                "title": "Installation Planning"
+                "id": "milestones",
+                "title": "Milestones"
             },
             {
-                "id": "progress",
-                "title": "Progress"
+                "id": "documents",
+                "title": "Documents"
             },
             {
-                "id": "terms",
-                "title": "T&C"
+                "id": "team",
+                "title": "Team"
             },
             {
-                "id": "closure",
-                "title": "Closure"
+                "id": "more",
+                "title": "More"
             }
         ]
     },
@@ -256,32 +296,52 @@
         "blurb": "Warehouses, stock moves, serials, and dispatch.",
         "functions": [
             {
-                "id": "warehouse",
-                "title": "Warehouse / Stores"
+                "id": "dashboard",
+                "title": "Inventory Dashboard"
             },
             {
-                "id": "stock",
-                "title": "Stock"
+                "id": "items",
+                "title": "Item Master / Stock View"
             },
             {
-                "id": "stock-transfer",
-                "title": "Stock Transfer"
+                "id": "warehouses",
+                "title": "Warehouse Management"
+            },
+            {
+                "id": "stock-ledger",
+                "title": "Stock Ledger"
+            },
+            {
+                "id": "material-receipt",
+                "title": "Material Receipt"
             },
             {
                 "id": "material-issue",
                 "title": "Material Issue"
             },
             {
-                "id": "material-return",
-                "title": "Material Return"
+                "id": "stock-transfer",
+                "title": "Stock Transfer"
             },
             {
-                "id": "serial-batch",
-                "title": "Serial / Batch Tracking"
+                "id": "stock-reconciliation",
+                "title": "Stock Reconciliation"
             },
             {
-                "id": "dispatch",
-                "title": "Dispatch / Logistics"
+                "id": "delivery",
+                "title": "Delivery & Fulfillment"
+            },
+            {
+                "id": "returns",
+                "title": "Returns / GRN Return"
+            },
+            {
+                "id": "reports",
+                "title": "Inventory Reports & Analytics"
+            },
+            {
+                "id": "settings",
+                "title": "Settings & Configuration"
             }
         ]
     },
@@ -293,6 +353,10 @@
         "fa_icon": "fas fa-tools",
         "blurb": "Service calls, AMC, breakdowns, and closure.",
         "functions": [
+            {
+                "id": "dashboard",
+                "title": "Service Dashboard"
+            },
             {
                 "id": "service-request",
                 "title": "Service Request"
@@ -332,28 +396,28 @@
         "blurb": "Customer equipment, serials, warranty, and AMC history.",
         "functions": [
             {
-                "id": "customer-assets",
-                "title": "Customer Assets"
+                "id": "dashboard",
+                "title": "Asset Dashboard"
             },
             {
-                "id": "installed-equipment",
-                "title": "Installed Equipment"
+                "id": "asset-registry",
+                "title": "Asset Registry"
             },
             {
-                "id": "serial-numbers",
-                "title": "Serial Numbers"
+                "id": "warranty-amc",
+                "title": "Warranty & AMC Management"
             },
             {
-                "id": "installation-history",
-                "title": "Installation History"
+                "id": "service-history",
+                "title": "Service History"
             },
             {
-                "id": "warranty",
-                "title": "Warranty"
+                "id": "asset-locations",
+                "title": "Asset Locations"
             },
             {
-                "id": "amc-history",
-                "title": "AMC History"
+                "id": "reports",
+                "title": "Reports & Analytics"
             }
         ]
     },
@@ -366,32 +430,32 @@
         "blurb": "Dashboards and management MIS.",
         "functions": [
             {
-                "id": "sales-dashboard",
-                "title": "Sales Dashboard"
+                "id": "dashboard",
+                "title": "MIS Dashboard"
             },
             {
-                "id": "project-dashboard",
-                "title": "Project Dashboard"
+                "id": "reports",
+                "title": "Reports"
             },
             {
-                "id": "service-dashboard",
-                "title": "Service Dashboard"
+                "id": "analytics",
+                "title": "Analytics"
             },
             {
-                "id": "procurement-dashboard",
-                "title": "Procurement Dashboard"
+                "id": "budget-planning",
+                "title": "Budget & Planning"
             },
             {
-                "id": "inventory-dashboard",
-                "title": "Inventory Dashboard"
+                "id": "kpis-scorecards",
+                "title": "KPIs & Scorecards"
             },
             {
-                "id": "employee-productivity",
-                "title": "Employee Productivity"
+                "id": "management-review",
+                "title": "Management Review"
             },
             {
-                "id": "management-mis",
-                "title": "Management MIS"
+                "id": "data-export",
+                "title": "Data Export"
             }
         ]
     }

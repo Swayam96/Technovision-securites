@@ -92,7 +92,12 @@ function navModules(user) {
     const nav = [];
     for (const m of MODULES) {
         if (canRead(user, m.id)) {
-            nav.push(m);
+            // Clone the module so we don't mutate the global MODULES array
+            const clonedModule = { ...m };
+            if (clonedModule.functions) {
+                clonedModule.functions = clonedModule.functions.filter(fn => canRead(user, m.id, fn.id));
+            }
+            nav.push(clonedModule);
         }
     }
     return nav;
