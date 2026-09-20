@@ -75,7 +75,7 @@ export default function AttendanceList() {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.get(`/api/attendance/my?year=${year}&month=${month}`, { withCredentials: true });
+      const res = await axios.get(`/api/attendance/my?year=${year}&month=${month}&_t=${Date.now()}`, { withCredentials: true });
       setMyAttendance(res.data);
     } catch (err) {
       if (err.response?.status === 401) navigate('/login');
@@ -91,7 +91,7 @@ export default function AttendanceList() {
 
   const fetchStats = async (employeeId = '') => {
     try {
-      const res = await axios.get(`/api/attendance/stats${employeeId ? `?employeeId=${employeeId}` : ''}`, { withCredentials: true });
+      const res = await axios.get(`/api/attendance/stats?_t=${Date.now()}${employeeId ? `&employeeId=${employeeId}` : ''}`, { withCredentials: true });
       setStats(res.data || []);
     } catch (err) {
       console.error('Failed to fetch stats', err);
@@ -101,7 +101,7 @@ export default function AttendanceList() {
   const fetchTeam = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`/api/attendance/team?date=${date}`, { withCredentials: true });
+      const res = await axios.get(`/api/attendance/team?date=${date}&_t=${Date.now()}`, { withCredentials: true });
       setTeam(res.data);
     } catch (err) {
       if (err.response?.status === 401) navigate('/login');
