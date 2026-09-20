@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import * as XLSX from 'xlsx';
-import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -20,23 +19,7 @@ export default function DataImportExport({ data, tableName, onImportSuccess, fil
         XLSX.writeFile(workbook, `${filename}.xlsx`);
     };
 
-    const handleExportPDF = () => {
-        if (!data || data.length === 0) {
-            toast.error("No data to export");
-            return;
-        }
-        const doc = new jsPDF('landscape');
-        const headers = Object.keys(data[0]);
-        const rows = data.map(obj => headers.map(h => obj[h] !== null && obj[h] !== undefined ? String(obj[h]) : ''));
-        
-        doc.autoTable({
-            head: [headers],
-            body: rows,
-            styles: { fontSize: 8 },
-            theme: 'grid'
-        });
-        doc.save(`${filename}.pdf`);
-    };
+
 
     const handleImportClick = () => {
         fileInputRef.current.click();
@@ -111,16 +94,7 @@ export default function DataImportExport({ data, tableName, onImportSuccess, fil
             >
                 <i className="fas fa-file-excel text-success mr-1"></i> Excel
             </button>
-            
-            <button 
-                type="button"
-                className="btn btn-sm btn-light shadow-sm"
-                onClick={handleExportPDF}
-                title="Export to PDF"
-                style={{ border: '1px solid #e2e8f0', color: '#475569', borderRadius: '4px', fontWeight: 500 }}
-            >
-                <i className="fas fa-file-pdf text-danger mr-1"></i> PDF
-            </button>
+
         </div>
     );
 }

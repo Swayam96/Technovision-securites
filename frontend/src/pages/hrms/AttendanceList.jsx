@@ -381,7 +381,7 @@ export default function AttendanceList() {
           )}
         </>
       ) : (
-        myAttendance && (
+        myAttendance ? (
           <>
             <div className="row mb-4" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
               <div className="col-md-4" style={{ flex: '1 1 300px' }}>
@@ -475,6 +475,8 @@ export default function AttendanceList() {
             
             <StatsCharts />
           </>
+        ) : (
+          !loading && <div className="card border-0 shadow-sm"><div className="card-body text-center p-5"><i className="fas fa-exclamation-circle text-muted fa-3x mb-3"></i><h5>No Attendance Record</h5><p className="text-muted">Your account is not linked to an employee profile yet.</p></div></div>
         )
       )}
     </div>
