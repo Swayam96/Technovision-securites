@@ -14,7 +14,8 @@ const scripts = [
     'src/setup_projects_db.js',
     'src/setup_purchase_db.js',
     'src/setup_service_db.js',
-    'setup_shifts.js'
+    'setup_shifts.js',
+    'upgrade_users.js'
 ];
 
 for (const script of scripts) {
