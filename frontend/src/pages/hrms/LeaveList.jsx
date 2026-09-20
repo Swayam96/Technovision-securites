@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -124,7 +125,7 @@ export default function LeaveList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={7} />
               ) : (activeTab === 'my' ? myLeaves : approvals).length > 0 ? (
                 (activeTab === 'my' ? myLeaves : approvals).map(l => (
                   <tr key={l.id} style={{ borderBottom: '1px solid #eee' }}>

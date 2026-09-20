@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -31,6 +32,7 @@ export default function BOQManagement() {
         <Link to="/modules/projects-installation/boq/new" className="btn btn-primary btn-sm px-3 shadow-sm rounded-pill">
           <i className="fas fa-plus fa-sm text-white-50 mr-2"></i> New BOQ
         </Link>
+          <DataImportExport data={data} tableName="projects" onImportSuccess={fetchData} />
       </div>
 
       <div className="card shadow mb-4 border-0">

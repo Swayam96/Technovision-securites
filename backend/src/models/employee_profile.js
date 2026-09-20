@@ -55,7 +55,7 @@ async function createEmployeeProfile(data, ownerId = null) {
             current_address, permanent_address, mobile_number,
             secondary_number, emergency_number
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
     `, [
         data.full_name,
         data.address || data.current_address || "",

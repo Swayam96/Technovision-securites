@@ -34,16 +34,24 @@ async function getDesignation(id) {
 async function createDesignation(data, ownerId = null) {
     const cols = [...DESIGNATION_COLUMNS, "owner_id"];
     const placeholders = cols.map(() => '?').join(', ');
-    const values = DESIGNATION_COLUMNS.map(c => data[c] !== undefined ? data[c] : null);
+    const values = DESIGNATION_COLUMNS.map(c => {
+        let val = data[c] !== undefined ? data[c] : null;
+        if (val === "" && c.endsWith("_id")) val = null;
+        return val;
+    });
     values.push(ownerId);
     
-    const result = await execute(`INSERT INTO designations (${cols.join(', ')}) VALUES (${placeholders})`, values);
+    const result = await execute(`INSERT INTO designations (${cols.join(', ')}) VALUES (${placeholders}) RETURNING id`, values);
     return result.lastrowid;
 }
 
 async function updateDesignation(id, data) {
     const assignments = DESIGNATION_COLUMNS.map(c => `${c} = ?`).join(', ');
-    const values = DESIGNATION_COLUMNS.map(c => data[c] !== undefined ? data[c] : null);
+    const values = DESIGNATION_COLUMNS.map(c => {
+        let val = data[c] !== undefined ? data[c] : null;
+        if (val === "" && c.endsWith("_id")) val = null;
+        return val;
+    });
     values.push(id);
     
     await execute(`UPDATE designations SET ${assignments}, updated_at = NOW() WHERE id = ?`, values);

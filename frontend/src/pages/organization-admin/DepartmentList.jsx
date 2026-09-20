@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,6 +52,7 @@ export default function DepartmentList() {
           >
             <i className="fas fa-plus mr-1" style={{ marginRight: '5px' }}></i> New Department
           </button>
+          <DataImportExport data={departments} tableName="departments" onImportSuccess={() => window.location.reload()} />
         </div>
       </div>
 
@@ -82,7 +85,7 @@ export default function DepartmentList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="5" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={5} />
               ) : departments.length > 0 ? (
                 departments.map(r => (
                   <tr key={r.id} style={{ borderBottom: '1px solid #eee' }}>

@@ -13,11 +13,17 @@ async function authMiddleware(req, res, next) {
         req.user = user;
         
         // Attach employee info
-        const emp = await fetchOne('SELECT id, employee_name FROM employees WHERE user_id = ?', [user.id]);
+        const emp = await fetchOne(`
+            SELECT e.id, e.employee_name, s.start_time, s.end_time 
+            FROM employees e 
+            LEFT JOIN shifts s ON s.id = e.shift_id 
+            WHERE e.user_id = $1`, [user.id]
+        );
         if (emp) {
             req.employeeId = emp.id;
             req.employeeName = emp.employee_name;
-            req.employeeShiftType = 'General'; // Default to General since column doesn't exist
+            req.shiftStart = emp.start_time || '09:00:00';
+            req.shiftEnd = emp.end_time || '18:00:00';
         }
         
         next();
@@ -81,14 +87,23 @@ router.get('/my', async (req, res) => {
             
             if (checkIn) {
                 const punchInTime = dayjs(checkIn);
-                const shiftType = req.employeeShiftType || 'General';
-                let shiftStartHour = shiftType === 'Field' ? 10 : 9;
                 
-                const shiftStart = dayjs(checkIn).hour(shiftStartHour).minute(0).second(0);
+                // Parse shiftStart from "HH:mm:ss"
+                const [sH, sM, sS] = (req.shiftStart || '09:00:00').split(':').map(Number);
+                const shiftStart = dayjs(checkIn).hour(sH).minute(sM).second(sS || 0);
+                
                 const isLate = punchInTime.isAfter(shiftStart.add(15, 'minute'));
                 
                 if (checkOut) {
-                    status = isLate ? "Late" : "Present";
+                    const start = dayjs(checkIn);
+                    const end = dayjs(checkOut);
+                    const diffMin = end.diff(start, 'minute');
+                    
+                    if (diffMin >= 8 * 60) {
+                        status = isLate ? "Late" : "Present";
+                    } else {
+                        status = "Absent"; // As per requirement: if less than 8 hrs, Absent
+                    }
                 } else {
                     status = isLate ? "Late (Checked in)" : "Checked in";
                 }
@@ -139,14 +154,21 @@ router.get('/team', async (req, res) => {
         const items = rawItems.map(r => {
             let status = "Not in";
             if (r.check_in) {
-                const shiftType = r.shift_type || 'General';
-                let shiftStartHour = shiftType === 'Field' ? 10 : 9;
-                
-                const shiftStart = dayjs(r.check_in).hour(shiftStartHour).minute(0).second(0);
-                const isLate = dayjs(r.check_in).isAfter(shiftStart.add(15, 'minute'));
+                const punchInTime = dayjs(r.check_in);
+                const [sH, sM, sS] = (r.start_time || '09:00:00').split(':').map(Number);
+                const shiftStart = dayjs(r.check_in).hour(sH).minute(sM).second(sS || 0);
+                const isLate = punchInTime.isAfter(shiftStart.add(15, 'minute'));
                 
                 if (r.check_out) {
-                    status = isLate ? "Late" : "Present";
+                    const start = dayjs(r.check_in);
+                    const end = dayjs(r.check_out);
+                    const diffMin = end.diff(start, 'minute');
+                    
+                    if (diffMin >= 8 * 60) {
+                        status = isLate ? "Late" : "Present";
+                    } else {
+                        status = "Absent";
+                    }
                 } else {
                     status = isLate ? "Late (Checked in)" : "Checked in";
                 }
@@ -193,6 +215,65 @@ router.post('/punch-out', async (req, res) => {
         res.json({ success: true, message: 'Checked out successfully.' });
     } catch (e) {
         res.status(400).json({ error: e.message || 'Failed to punch out' });
+    }
+});
+
+router.get('/stats', async (req, res) => {
+    try {
+        // Simplified stats: For given month (or last 30 days), calc average check in, out, and late days
+        const { employeeId } = req.query; 
+        // If employeeId is passed, Admin/HR wants to see specific employee stats. 
+        // Otherwise use req.employeeId for "My stats".
+        const targetEmployee = employeeId ? parseInt(employeeId) : req.employeeId;
+        
+        if (!targetEmployee) return res.json([]);
+        
+        const end = dayjs();
+        const start = dayjs().subtract(30, 'day');
+        
+        const punchesRaw = await listAttendanceMonth(targetEmployee, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+        
+        const stats = [];
+        let cur = start;
+        while (cur.isBefore(end) || cur.isSame(end, 'day')) {
+            const dateStr = cur.format('YYYY-MM-DD');
+            const row = punchesRaw.find(p => dayjs(p.work_date).format('YYYY-MM-DD') === dateStr);
+            
+            // To plot check-in and check-out time in a graph, we convert them to hour numbers (e.g., 9.5 for 9:30 AM)
+            let checkInVal = null;
+            let checkOutVal = null;
+            let late = 0;
+            
+            if (row && row.check_in) {
+                const cin = dayjs(row.check_in);
+                checkInVal = cin.hour() + (cin.minute() / 60);
+                
+                // We don't have shiftStart for historical in stats right now without joining, 
+                // but let's assume if it's > target shift start + 15 mins, it's late.
+                const [sH, sM] = (req.shiftStart || '09:00').split(':').map(Number);
+                const shiftStart = cin.hour(sH).minute(sM).second(0);
+                if (cin.isAfter(shiftStart.add(15, 'minute'))) late = 1;
+                
+                if (row.check_out) {
+                    const cout = dayjs(row.check_out);
+                    checkOutVal = cout.hour() + (cout.minute() / 60);
+                }
+            }
+            
+            stats.push({
+                name: cur.format('MMM DD'),
+                checkIn: checkInVal ? parseFloat(checkInVal.toFixed(2)) : null,
+                checkOut: checkOutVal ? parseFloat(checkOutVal.toFixed(2)) : null,
+                late: late
+            });
+            
+            cur = cur.add(1, 'day');
+        }
+        
+        res.json(stats);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 

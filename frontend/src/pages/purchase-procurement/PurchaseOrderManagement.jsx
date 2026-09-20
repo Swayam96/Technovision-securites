@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -60,6 +61,7 @@ export default function PurchaseOrderManagement() {
                     </td>
                     <td>
                       <Link to={`/modules/purchase-procurement/purchase-orders/${item.id}`} className="btn btn-sm btn-link text-primary p-0 me-2"><i className="fas fa-edit"></i> Edit</Link>
+          <DataImportExport data={data} tableName="purchase" onImportSuccess={fetchData} />
                     </td>
                   </tr>
                 ))}

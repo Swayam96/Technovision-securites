@@ -30,18 +30,21 @@ async function getCompany(id) {
 }
 
 async function createCompany(data, ownerId = null) {
-    const cols = [...COMPANY_COLUMNS, "owner_id"];
+    const activeCols = COMPANY_COLUMNS.filter(c => data[c] !== undefined && data[c] !== null);
+    const cols = [...activeCols, "owner_id"];
     const placeholders = cols.map(() => '?').join(', ');
-    const values = COMPANY_COLUMNS.map(c => data[c] !== undefined ? data[c] : null);
+    const values = activeCols.map(c => data[c]);
     values.push(ownerId);
     
-    const result = await execute(`INSERT INTO companies (${cols.join(', ')}) VALUES (${placeholders})`, values);
+    const result = await execute(`INSERT INTO companies (${cols.join(', ')}) VALUES (${placeholders}) RETURNING id`, values);
     return result.lastrowid;
 }
 
 async function updateCompany(id, data) {
-    const assignments = COMPANY_COLUMNS.map(c => `${c} = ?`).join(', ');
-    const values = COMPANY_COLUMNS.map(c => data[c] !== undefined ? data[c] : null);
+    const activeCols = COMPANY_COLUMNS.filter(c => data[c] !== undefined && data[c] !== null);
+    if (activeCols.length === 0) return;
+    const assignments = activeCols.map(c => `${c} = ?`).join(', ');
+    const values = activeCols.map(c => data[c]);
     values.push(id);
     
     await execute(`UPDATE companies SET ${assignments}, updated_at = NOW() WHERE id = ?`, values);

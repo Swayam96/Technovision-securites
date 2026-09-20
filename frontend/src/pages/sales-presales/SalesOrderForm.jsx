@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -44,6 +46,7 @@ export default function SalesOrderForm() {
       } else {
         await axios.post('http://localhost:3000/api/sales/sales-orders', formData, { withCredentials: true });
       }
+      toast.success(isEdit ? 'Updated successfully!' : 'Created successfully!');
       navigate('/modules/sales-presales/sales-orders');
     } catch (err) {
       console.error(err);

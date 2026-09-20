@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -109,7 +110,7 @@ export default function PayrollList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="9" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={9} />
               ) : slips.length > 0 ? (
                 slips.map(s => (
                   <tr key={s.id} style={{ borderBottom: '1px solid #eee' }}>

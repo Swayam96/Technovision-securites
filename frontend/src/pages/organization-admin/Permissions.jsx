@@ -36,6 +36,7 @@ export default function Permissions() {
   const fetchPermissions = async (userId) => {
     try {
       const res = await axios.get(`/api/users/${userId}/permissions`, { withCredentials: true });
+      console.log('Fetched permissions for user', userId, ':', res.data);
       setPermissions(res.data);
     } catch (err) {
       console.error("Failed to load permissions", err);

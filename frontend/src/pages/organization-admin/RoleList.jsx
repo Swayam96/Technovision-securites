@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,6 +52,7 @@ export default function RoleList() {
           >
             <i className="fas fa-plus mr-1" style={{ marginRight: '5px' }}></i> New Role
           </button>
+          <DataImportExport data={roles} tableName="roles" onImportSuccess={() => window.location.reload()} />
         </div>
       </div>
 
@@ -83,7 +86,7 @@ export default function RoleList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={6} />
               ) : roles.length > 0 ? (
                 roles.map(r => (
                   <tr key={r.id} style={{ borderBottom: '1px solid #eee' }}>

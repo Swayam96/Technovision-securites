@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -159,6 +160,7 @@ export default function ProductsDashboard() {
                         <h4 className="fw-bold mb-2">Build a Stronger Product Catalogue</h4>
                         <p className="mb-4 text-white-50">Centralize. Standardize. Grow.</p>
                         <Link to="/modules/products/items/new" className="btn btn-light rounded-pill px-4 text-primary fw-medium shadow">Add New Item</Link>
+          <DataImportExport data={recentItems} tableName="recentItems" onImportSuccess={() => window.location.reload()} />
                     </div>
                 </div>
             </div>

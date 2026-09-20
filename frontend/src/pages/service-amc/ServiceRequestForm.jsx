@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -43,6 +45,7 @@ export default function ServiceRequestForm() {
       } else {
         await axios.post(`/api/service/requests`, formData, { withCredentials: true });
       }
+      toast.success('Saved successfully!');
       navigate('/modules/service-amc/requests');
     } catch (err) {
       console.error(err);

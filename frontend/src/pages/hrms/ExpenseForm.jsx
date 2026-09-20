@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ export default function ExpenseForm() {
         // Mock API call delay
         setTimeout(() => {
             setIsSubmitting(false);
+            toast.success('Saved successfully!');
             navigate('/modules/hrms/expenses');
         }, 800);
     };

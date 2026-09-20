@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -24,6 +25,7 @@ export default function LeaveForm() {
     
     try {
       await axios.post('/api/leave', formData, { withCredentials: true });
+      toast.success('Saved successfully!');
       navigate('/modules/hrms/leave');
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to submit leave request');

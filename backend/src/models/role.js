@@ -34,16 +34,24 @@ async function getRole(id) {
 async function createRole(data, ownerId = null) {
     const cols = [...ROLE_COLUMNS, "owner_id"];
     const placeholders = cols.map(() => '?').join(', ');
-    const values = ROLE_COLUMNS.map(c => data[c] !== undefined ? data[c] : null);
+    const values = ROLE_COLUMNS.map(c => {
+        let val = data[c] !== undefined ? data[c] : null;
+        if (val === "" && c.endsWith("_id")) val = null;
+        return val;
+    });
     values.push(ownerId);
     
-    const result = await execute(`INSERT INTO org_roles (${cols.join(', ')}) VALUES (${placeholders})`, values);
+    const result = await execute(`INSERT INTO org_roles (${cols.join(', ')}) VALUES (${placeholders}) RETURNING id`, values);
     return result.lastrowid;
 }
 
 async function updateRole(id, data) {
     const assignments = ROLE_COLUMNS.map(c => `${c} = ?`).join(', ');
-    const values = ROLE_COLUMNS.map(c => data[c] !== undefined ? data[c] : null);
+    const values = ROLE_COLUMNS.map(c => {
+        let val = data[c] !== undefined ? data[c] : null;
+        if (val === "" && c.endsWith("_id")) val = null;
+        return val;
+    });
     values.push(id);
     
     await execute(`UPDATE org_roles SET ${assignments}, updated_at = NOW() WHERE id = ?`, values);

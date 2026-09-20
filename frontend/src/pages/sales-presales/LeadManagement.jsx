@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -112,6 +113,7 @@ const LeadManagement = () => {
                                             <td className="text-muted">{lead.created_on}</td>
                                             <td className="text-end pe-4">
                                                 <Link to={`/modules/sales-presales/leads/${lead.id}`} className="btn btn-sm btn-link text-primary p-0 me-2"><i className="fas fa-edit"></i> Edit</Link>
+          <DataImportExport data={leads} tableName="leads" onImportSuccess={() => window.location.reload()} />
                                                 <button className="btn btn-sm btn-link text-muted p-0"><i className="fas fa-ellipsis-v"></i></button>
                                             </td>
                                         </tr>

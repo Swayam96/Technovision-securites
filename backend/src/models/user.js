@@ -5,11 +5,23 @@ const ACTION_IDS = ["read", "write", "create", "submit", "cancel", "amend", "pri
 
 
 async function getUserByUsername(username) {
-    return await fetchOne('SELECT * FROM users WHERE username = ?', [username]);
+    const user = await fetchOne('SELECT * FROM users WHERE username = ?', [username]);
+    if (user) {
+        user.perms = await getUserPermissions(user.id);
+        const emp = await fetchOne('SELECT r.role_name FROM employees e LEFT JOIN org_roles r ON r.id = e.org_role_id WHERE e.user_id = ?', [user.id]);
+        if (emp) user.org_role_name = emp.role_name;
+    }
+    return user;
 }
 
 async function getUserById(id) {
-    return await fetchOne('SELECT * FROM users WHERE id = ?', [id]);
+    const user = await fetchOne('SELECT * FROM users WHERE id = ?', [id]);
+    if (user) {
+        user.perms = await getUserPermissions(user.id);
+        const emp = await fetchOne('SELECT r.role_name FROM employees e LEFT JOIN org_roles r ON r.id = e.org_role_id WHERE e.user_id = ?', [user.id]);
+        if (emp) user.org_role_name = emp.role_name;
+    }
+    return user;
 }
 
 async function listUsers() {

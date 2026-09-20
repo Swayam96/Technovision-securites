@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -41,6 +42,7 @@ const CustomerManagement = () => {
                     <Link to="new" className="btn btn-primary btn-sm px-3 shadow-sm rounded-pill">
                         <i className="fas fa-plus me-2"></i> New Customer
                     </Link>
+          <DataImportExport data={customers} tableName="customers" onImportSuccess={() => window.location.reload()} />
                 </div>
             </div>
 

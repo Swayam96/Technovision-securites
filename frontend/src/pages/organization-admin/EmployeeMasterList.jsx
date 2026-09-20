@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -84,7 +85,7 @@ export default function EmployeeMasterList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={7} />
               ) : employees.length > 0 ? (
                 employees.map(e => (
                   <tr key={e.id} style={{ borderBottom: '1px solid #eee' }}>

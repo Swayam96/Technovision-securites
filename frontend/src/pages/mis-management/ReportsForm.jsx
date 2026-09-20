@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -40,6 +42,7 @@ export default function ReportsForm() {
       } else {
         await axios.post(`/api/mis/reports`, formData, { withCredentials: true });
       }
+      toast.success('Saved successfully!');
       navigate('/modules/mis-management/reports');
     } catch (err) {
       console.error(err);

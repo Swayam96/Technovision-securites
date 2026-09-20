@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -42,6 +44,7 @@ export default function TaskForm() {
       } else {
         await axios.post(`/api/projects/tasks`, formData, { withCredentials: true });
       }
+      toast.success('Saved successfully!');
       navigate('/modules/projects-installation/tasks');
     } catch (err) {
       console.error(err);

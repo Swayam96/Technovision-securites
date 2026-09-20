@@ -32,16 +32,24 @@ async function getDepartment(id) {
 async function createDepartment(data, ownerId = null) {
     const cols = [...DEPARTMENT_COLUMNS, "owner_id"];
     const placeholders = cols.map(() => '?').join(', ');
-    const values = DEPARTMENT_COLUMNS.map(c => data[c] !== undefined ? data[c] : null);
+    const values = DEPARTMENT_COLUMNS.map(c => {
+        let val = data[c] !== undefined ? data[c] : null;
+        if (val === "" && c.endsWith("_id")) val = null;
+        return val;
+    });
     values.push(ownerId);
     
-    const result = await execute(`INSERT INTO departments (${cols.join(', ')}) VALUES (${placeholders})`, values);
+    const result = await execute(`INSERT INTO departments (${cols.join(', ')}) VALUES (${placeholders}) RETURNING id`, values);
     return result.lastrowid;
 }
 
 async function updateDepartment(id, data) {
     const assignments = DEPARTMENT_COLUMNS.map(c => `${c} = ?`).join(', ');
-    const values = DEPARTMENT_COLUMNS.map(c => data[c] !== undefined ? data[c] : null);
+    const values = DEPARTMENT_COLUMNS.map(c => {
+        let val = data[c] !== undefined ? data[c] : null;
+        if (val === "" && c.endsWith("_id")) val = null;
+        return val;
+    });
     values.push(id);
     
     await execute(`UPDATE departments SET ${assignments}, updated_at = NOW() WHERE id = ?`, values);

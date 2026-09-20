@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -40,6 +42,7 @@ export default function ManagementReviewForm() {
       } else {
         await axios.post(`/api/mis/management-review`, formData, { withCredentials: true });
       }
+      toast.success('Saved successfully!');
       navigate('/modules/mis-management/management-review');
     } catch (err) {
       console.error(err);

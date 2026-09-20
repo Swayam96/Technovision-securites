@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -41,6 +43,7 @@ export default function UOMForm() {
       } else {
         await axios.post('http://localhost:3000/api/products/uoms', formData, { withCredentials: true });
       }
+      toast.success(isEdit ? 'Updated successfully!' : 'Created successfully!');
       navigate('/modules/products/uoms');
     } catch (err) {
       console.error(err);

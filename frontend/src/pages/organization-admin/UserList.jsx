@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,10 +41,11 @@ export default function UserList() {
           <button 
             className="btn btn-primary btn-sm px-3 shadow-sm rounded-pill" 
             style={{ background: '#3b82f6', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}
-            onClick={() => navigate('/modules/organization-administration/users/new')}
+            onClick={() => navigate('/modules/organization-administration/employee-master/new')}
           >
             <i className="fas fa-plus mr-1" style={{ marginRight: '5px' }}></i> New User
           </button>
+          <DataImportExport data={users} tableName="users" onImportSuccess={fetchUsers} />
         </div>
       </div>
 
@@ -60,7 +63,7 @@ export default function UserList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="5" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={5} />
               ) : users.length > 0 ? (
                 users.map(u => (
                   <tr key={u.id} style={{ borderBottom: '1px solid #eee' }}>

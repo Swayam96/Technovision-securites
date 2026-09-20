@@ -61,7 +61,7 @@ async function createEmployee(data, ownerId = null) {
     const existingUserId = profile.user_id;
     let userId;
     
-    const accessRole = "admin"; // simplify for now
+    const accessRole = "user"; // Changed from "admin" to "user" so RBAC works
     
     if (existingUserId) {
         userId = parseInt(existingUserId);
@@ -76,9 +76,15 @@ async function createEmployee(data, ownerId = null) {
             [employeeName, accessRole, data.status === "Active" ? 1 : 0, userId]
         );
     } else {
+        const usernameCheck = (data.username || '').trim().toLowerCase();
+        const existingUser = await fetchOne("SELECT id FROM users WHERE username = ?", [usernameCheck]);
+        if (existingUser) {
+            throw new Error("Username already exists. Please choose a different username.");
+        }
+
         const userRes = await execute(
-            "INSERT INTO users (username, full_name, role_id, password_hash, must_change_password, is_active) VALUES (?, ?, ?, ?, 1, ?)",
-            [data.username, employeeName, accessRole, hashPassword('welcome123'), data.status === "Active" ? 1 : 0]
+            "INSERT INTO users (username, full_name, role_id, password_hash, must_change_password, is_active) VALUES (?, ?, ?, ?, 1, ?) RETURNING id",
+            [usernameCheck, employeeName, accessRole, hashPassword('12345'), data.status === "Active" ? 1 : 0]
         );
         userId = userRes.lastrowid;
     }
@@ -98,7 +104,7 @@ async function createEmployee(data, ownerId = null) {
             department_id, designation_id, org_role_id, reporting_authority_id,
             access_role_id, access_modules, permission_flags, status, owner_id,
             shift_type, base_salary
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id`,
         [
             employeeName, data.username, userId, data.profile_id, data.company_id || null, data.branch_id || null,
             data.department_id || null, data.designation_id || null, data.org_role_id || null, reportingAuthId,

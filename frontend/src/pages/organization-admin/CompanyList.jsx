@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,6 +52,7 @@ export default function CompanyList() {
           >
             <i className="fas fa-plus mr-1" style={{ marginRight: '5px' }}></i> New Company
           </button>
+          <DataImportExport data={companies} tableName="companies" onImportSuccess={() => window.location.reload()} />
         </div>
       </div>
 
@@ -84,7 +87,7 @@ export default function CompanyList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={7} />
               ) : companies.length > 0 ? (
                 companies.map(r => (
                   <tr key={r.id} style={{ borderBottom: '1px solid #eee' }}>

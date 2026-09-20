@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -102,6 +103,7 @@ const OpportunityManagement = () => {
                                             <td className="text-muted">{opp.probability}%</td>
                                             <td className="text-end pe-4">
                                                 <Link to={`/modules/sales-presales/opportunities/${opp.id}`} className="btn btn-sm btn-link text-primary p-0 me-2"><i className="fas fa-edit"></i> Edit</Link>
+          <DataImportExport data={opportunities} tableName="opportunities" onImportSuccess={() => window.location.reload()} />
                                                 <button className="btn btn-sm btn-link text-muted p-0"><i className="fas fa-ellipsis-v"></i></button>
                                             </td>
                                         </tr>

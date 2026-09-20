@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -55,6 +57,7 @@ export default function PurchaseInvoiceForm() {
       } else {
         await axios.post(`/api/purchase/invoices`, formData, { withCredentials: true });
       }
+      toast.success('Saved successfully!');
       navigate('/modules/purchase-procurement/invoices');
     } catch (err) {
       console.error(err);

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
+import DataImportExport from '../../components/DataImportExport';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -218,6 +220,7 @@ export default function ExpenseList() {
                         >
                             <i className="fas fa-plus mr-2"></i> New Expense
                         </button>
+          <DataImportExport data={expenses} tableName="expenses" onImportSuccess={fetchData} />
                     </div>
 
                     {/* Filters */}
@@ -312,7 +315,7 @@ export default function ExpenseList() {
                             </thead>
                             <tbody>
                                 {loading ? (
-                                    <tr><td colSpan="11" className="text-center py-4">Loading...</td></tr>
+                                    <TableSkeleton columns={11} />
                                 ) : filteredExpenses.length > 0 ? filteredExpenses.map(exp => {
                                     const statusStyle = getStatusStyle(exp.status);
                                     return (

@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -54,6 +55,7 @@ export default function BranchForm() {
       } else {
         await axios.post('/api/branches', formData, { withCredentials: true });
       }
+      toast.success(isEdit ? 'Updated successfully!' : 'Created successfully!');
       navigate('/modules/organization-administration/branches');
     } catch (err) {
       console.error(err);

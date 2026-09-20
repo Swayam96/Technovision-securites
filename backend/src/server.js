@@ -46,6 +46,7 @@ app.use(session({
 const authRoutes = require('./routes/auth/auth');
 const dashboardRoutes = require('./routes/core/dashboard');
 const modulesRoutes = require('./routes/core/modules');
+const coreRoutes = require('./routes/core/bulk-import');
 
 const companiesRoutes = require('./routes/organization-admin/companies');
 const departmentsRoutes = require('./routes/organization-admin/departments');
@@ -60,6 +61,7 @@ const attendanceRoutes = require('./routes/hrms/attendance');
 const leaveRoutes = require('./routes/hrms/leave');
 const payrollRoutes = require('./routes/hrms/payroll');
 const expensesRoutes = require('./routes/hrms/expenses');
+const shiftsRoutes = require('./routes/hrms/shifts');
 
 const productsRoutes = require('./routes/products-master-data/products');
 const salesRoutes = require('./routes/sales-presales/sales');
@@ -78,6 +80,7 @@ app.use('/api/designations', designationsRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/modules', modulesRoutes);
+app.use('/api/core', coreRoutes);
 app.use('/api/branches', branchesRoutes);
 app.use('/api/employee-profiles', employeeProfilesRoutes);
 app.use('/api/employees', employeesRoutes);
@@ -85,6 +88,7 @@ app.use('/api/attendance', attendanceRoutes);
 app.use('/api/leave', leaveRoutes);
 app.use('/api/payroll', payrollRoutes);
 app.use('/api/expenses', expensesRoutes);
+app.use('/api/shifts', shiftsRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/purchase', purchaseRoutes);

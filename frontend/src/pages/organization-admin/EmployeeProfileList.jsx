@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -83,7 +84,7 @@ export default function EmployeeProfileList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={6} />
               ) : profiles.length > 0 ? (
                 profiles.map(p => (
                   <tr key={p.id} style={{ borderBottom: '1px solid #eee' }}>

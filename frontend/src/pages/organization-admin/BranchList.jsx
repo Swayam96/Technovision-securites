@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -114,7 +115,7 @@ export default function BranchList() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="4" style={{ textAlign: 'center', padding: '20px' }}>Loading...</td></tr>
+                <TableSkeleton columns={4} />
               ) : records.length > 0 ? (
                 records.map(r => (
                   <tr key={r.id} style={{ borderBottom: '1px solid #eee' }}>

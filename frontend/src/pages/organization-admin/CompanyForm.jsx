@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -48,7 +49,7 @@ export default function CompanyForm() {
 
   useEffect(() => {
     if (isEdit) {
-      axios.get(`/api/company/${id}`, { withCredentials: true })
+      axios.get(`/api/companies/${id}`, { withCredentials: true })
         .then(res => {
           setFormData(res.data);
           setLoading(false);
@@ -68,10 +69,11 @@ export default function CompanyForm() {
     e.preventDefault();
     try {
       if (isEdit) {
-        await axios.put(`/api/company/${id}`, formData, { withCredentials: true });
+        await axios.put(`/api/companies/${id}`, formData, { withCredentials: true });
       } else {
-        await axios.post('/api/company', formData, { withCredentials: true });
+        await axios.post('/api/companies', formData, { withCredentials: true });
       }
+      toast.success(isEdit ? 'Updated successfully!' : 'Created successfully!');
       navigate('/modules/organization-administration/company');
     } catch (err) {
       console.error(err);

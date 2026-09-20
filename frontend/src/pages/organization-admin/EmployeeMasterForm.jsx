@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const ACTION_IDS = ["read", "write", "create", "submit", "cancel", "amend", "print", "email", "export", "report", "share", "delete", "import"];
 const STANDARD_WRITE = ["read", "create", "write", "submit", "cancel", "amend", "print", "email", "export", "report", "share"];
@@ -14,7 +15,7 @@ export default function EmployeeMasterForm() {
     profile_id: '',
     username: '',
     status: 'Active',
-    shift_type: 'General',
+    shift_id: '',
     base_salary: 0,
     company_id: '',
     branch_id: '',
@@ -33,6 +34,7 @@ export default function EmployeeMasterForm() {
   const [orgRoles, setOrgRoles] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [modules, setModules] = useState([]);
+  const [shifts, setShifts] = useState([]);
 
   const [permMap, setPermMap] = useState({});
   const [expandedModules, setExpandedModules] = useState({});
@@ -42,7 +44,7 @@ export default function EmployeeMasterForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [profRes, coRes, brRes, depRes, desRes, roleRes, empRes, modRes] = await Promise.all([
+        const [profRes, coRes, brRes, depRes, desRes, roleRes, empRes, modRes, shiftRes] = await Promise.all([
           axios.get('/api/employee-profiles', { withCredentials: true }),
           axios.get('/api/companies', { withCredentials: true }),
           axios.get('/api/branches', { withCredentials: true }),
@@ -50,7 +52,8 @@ export default function EmployeeMasterForm() {
           axios.get('/api/designations', { withCredentials: true }),
           axios.get('/api/roles', { withCredentials: true }),
           axios.get('/api/employees', { withCredentials: true }),
-          axios.get('/api/modules', { withCredentials: true })
+          axios.get('/api/modules', { withCredentials: true }),
+          axios.get('/api/shifts', { withCredentials: true })
         ]);
         setProfiles(profRes.data || []);
         setCompanies(coRes.data || []);
@@ -60,6 +63,7 @@ export default function EmployeeMasterForm() {
         setOrgRoles(roleRes.data || []);
         setEmployees(empRes.data || []);
         setModules(modRes.data || []);
+        setShifts(shiftRes.data || []);
       } catch (err) {
         console.error("Failed to fetch dropdown data", err);
       }
@@ -150,10 +154,11 @@ export default function EmployeeMasterForm() {
       } else {
         await axios.post('/api/employees', payload, { withCredentials: true });
       }
+      toast.success(isEdit ? 'Updated successfully!' : 'Created successfully!');
       navigate('/modules/organization-administration/employee-master');
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.error || 'Failed to save employee master');
+      toast.error(err.response?.data?.error || 'Failed to save employee master');
     }
   };
 
@@ -226,10 +231,10 @@ export default function EmployeeMasterForm() {
                   </select>
                 </div>
                 <div style={{ marginBottom: '15px' }}>
-                  <label style={labelStyle}>Shift Type *</label>
-                  <select name="shift_type" value={formData.shift_type} onChange={handleChange} required style={inputStyle}>
-                    <option value="General">General Shift (9 AM to 6 PM)</option>
-                    <option value="Field">Field Shift (10 AM to 7 PM)</option>
+                  <label style={labelStyle}>Shift *</label>
+                  <select name="shift_id" value={formData.shift_id} onChange={handleChange} required style={inputStyle}>
+                    <option value="">— Select shift —</option>
+                    {shifts.map(s => <option key={s.id} value={s.id}>{s.shift_name} ({s.start_time.slice(0, 5)} - {s.end_time.slice(0, 5)})</option>)}
                   </select>
                 </div>
                 <div>
@@ -280,8 +285,6 @@ export default function EmployeeMasterForm() {
                     <select name="designation_id" value={formData.designation_id} onChange={handleChange} required style={inputStyle}>
                       <option value="">— Select designation —</option>
                       {designations
-                        .filter(d => !formData.company_id || !d.company_id || String(d.company_id) === String(formData.company_id))
-                        .filter(d => !formData.department_id || !d.department_id || String(d.department_id) === String(formData.department_id))
                         .map(d => <option key={d.id} value={d.id}>{d.designation_name}</option>)}
                     </select>
                   </div>
@@ -290,8 +293,6 @@ export default function EmployeeMasterForm() {
                     <select name="org_role_id" value={formData.org_role_id} onChange={handleChange} required style={inputStyle}>
                       <option value="">— Select role —</option>
                       {orgRoles
-                        .filter(r => !formData.company_id || !r.company_id || String(r.company_id) === String(formData.company_id))
-                        .filter(r => !formData.department_id || !r.department_id || String(r.department_id) === String(formData.department_id))
                         .map(r => <option key={r.id} value={r.id}>{r.role_name}</option>)}
                     </select>
                   </div>

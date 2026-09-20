@@ -1,185 +1,190 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import Loader from './components/Loader';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/auth/Login';
+import ChangePassword from './pages/auth/ChangePassword';
+import { Toaster } from 'react-hot-toast';
 
-import Dashboard from './pages/core/Dashboard';
-import ModuleOverview from './pages/core/ModuleOverview';
+const Dashboard = React.lazy(() => import('./pages/core/Dashboard'));
+const ModuleOverview = React.lazy(() => import('./pages/core/ModuleOverview'));
 import NotFound from './pages/core/NotFound';
 
 // Organization & Admin
-import CompanyList from './pages/organization-admin/CompanyList';
-import CompanyForm from './pages/organization-admin/CompanyForm';
-import DepartmentList from './pages/organization-admin/DepartmentList';
-import DepartmentForm from './pages/organization-admin/DepartmentForm';
-import DesignationList from './pages/organization-admin/DesignationList';
-import DesignationForm from './pages/organization-admin/DesignationForm';
-import RoleList from './pages/organization-admin/RoleList';
-import RoleForm from './pages/organization-admin/RoleForm';
-import UserList from './pages/organization-admin/UserList';
-import Permissions from './pages/organization-admin/Permissions';
-import EmployeeMasterList from './pages/organization-admin/EmployeeMasterList';
-import EmployeeMasterForm from './pages/organization-admin/EmployeeMasterForm';
-import EmployeeProfileList from './pages/organization-admin/EmployeeProfileList';
-import EmployeeProfileForm from './pages/organization-admin/EmployeeProfileForm';
-import BranchList from './pages/organization-admin/BranchList';
-import BranchForm from './pages/organization-admin/BranchForm';
+const CompanyList = React.lazy(() => import('./pages/organization-admin/CompanyList'));
+const CompanyForm = React.lazy(() => import('./pages/organization-admin/CompanyForm'));
+const DepartmentList = React.lazy(() => import('./pages/organization-admin/DepartmentList'));
+const DepartmentForm = React.lazy(() => import('./pages/organization-admin/DepartmentForm'));
+const DesignationList = React.lazy(() => import('./pages/organization-admin/DesignationList'));
+const DesignationForm = React.lazy(() => import('./pages/organization-admin/DesignationForm'));
+const RoleList = React.lazy(() => import('./pages/organization-admin/RoleList'));
+const RoleForm = React.lazy(() => import('./pages/organization-admin/RoleForm'));
+const UserList = React.lazy(() => import('./pages/organization-admin/UserList'));
+const Permissions = React.lazy(() => import('./pages/organization-admin/Permissions'));
+const EmployeeMasterList = React.lazy(() => import('./pages/organization-admin/EmployeeMasterList'));
+const EmployeeMasterForm = React.lazy(() => import('./pages/organization-admin/EmployeeMasterForm'));
+const EmployeeProfileList = React.lazy(() => import('./pages/organization-admin/EmployeeProfileList'));
+const EmployeeProfileForm = React.lazy(() => import('./pages/organization-admin/EmployeeProfileForm'));
+const BranchList = React.lazy(() => import('./pages/organization-admin/BranchList'));
+const BranchForm = React.lazy(() => import('./pages/organization-admin/BranchForm'));
 
 // HRMS
-import AttendanceList from './pages/hrms/AttendanceList';
-import LeaveList from './pages/hrms/LeaveList';
-import LeaveForm from './pages/hrms/LeaveForm';
-import ShiftList from './pages/hrms/ShiftList';
-import PayrollList from './pages/hrms/PayrollList';
-import ExpenseList from './pages/hrms/ExpenseList';
-import ExpenseForm from './pages/hrms/ExpenseForm';
+const AttendanceList = React.lazy(() => import('./pages/hrms/AttendanceList'));
+const LeaveList = React.lazy(() => import('./pages/hrms/LeaveList'));
+const LeaveForm = React.lazy(() => import('./pages/hrms/LeaveForm'));
+const ShiftList = React.lazy(() => import('./pages/hrms/ShiftList'));
+const PayrollList = React.lazy(() => import('./pages/hrms/PayrollList'));
+const ExpenseList = React.lazy(() => import('./pages/hrms/ExpenseList'));
+const ExpenseForm = React.lazy(() => import('./pages/hrms/ExpenseForm'));
 
 // Sales & Presales
-import SalesDashboard from './pages/sales-presales/SalesDashboard';
-import LeadManagement from './pages/sales-presales/LeadManagement';
-import LeadForm from './pages/sales-presales/LeadForm';
-import ContactManagement from './pages/sales-presales/ContactManagement';
-import ContactForm from './pages/sales-presales/ContactForm';
-import CustomerManagement from './pages/sales-presales/CustomerManagement';
-import CustomerForm from './pages/sales-presales/CustomerForm';
-import OpportunityManagement from './pages/sales-presales/OpportunityManagement';
-import OpportunityForm from './pages/sales-presales/OpportunityForm';
-import QuotationManagement from './pages/sales-presales/QuotationManagement';
-import QuotationForm from './pages/sales-presales/QuotationForm';
-import BOQManagement from './pages/sales-presales/BOQManagement';
-import BOQForm from './pages/sales-presales/BOQForm';
-import SalesOrderManagement from './pages/sales-presales/SalesOrderManagement';
-import SalesOrderForm from './pages/sales-presales/SalesOrderForm';
+const SalesDashboard = React.lazy(() => import('./pages/sales-presales/SalesDashboard'));
+const LeadManagement = React.lazy(() => import('./pages/sales-presales/LeadManagement'));
+const LeadForm = React.lazy(() => import('./pages/sales-presales/LeadForm'));
+const ContactManagement = React.lazy(() => import('./pages/sales-presales/ContactManagement'));
+const ContactForm = React.lazy(() => import('./pages/sales-presales/ContactForm'));
+const CustomerManagement = React.lazy(() => import('./pages/sales-presales/CustomerManagement'));
+const CustomerForm = React.lazy(() => import('./pages/sales-presales/CustomerForm'));
+const OpportunityManagement = React.lazy(() => import('./pages/sales-presales/OpportunityManagement'));
+const OpportunityForm = React.lazy(() => import('./pages/sales-presales/OpportunityForm'));
+const QuotationManagement = React.lazy(() => import('./pages/sales-presales/QuotationManagement'));
+const QuotationForm = React.lazy(() => import('./pages/sales-presales/QuotationForm'));
+const BOQManagement = React.lazy(() => import('./pages/sales-presales/BOQManagement'));
+const BOQForm = React.lazy(() => import('./pages/sales-presales/BOQForm'));
+const SalesOrderManagement = React.lazy(() => import('./pages/sales-presales/SalesOrderManagement'));
+const SalesOrderForm = React.lazy(() => import('./pages/sales-presales/SalesOrderForm'));
 
 // Products & Master Data
-import ProductsDashboard from './pages/products-master-data/ProductsDashboard';
-import ItemManagement from './pages/products-master-data/ItemManagement';
-import ItemForm from './pages/products-master-data/ItemForm';
-import ItemGroupManagement from './pages/products-master-data/ItemGroupManagement';
-import ItemGroupForm from './pages/products-master-data/ItemGroupForm';
-import BrandManagement from './pages/products-master-data/BrandManagement';
-import BrandForm from './pages/products-master-data/BrandForm';
-import UOMManagement from './pages/products-master-data/UOMManagement';
-import UOMForm from './pages/products-master-data/UOMForm';
-import AttributeManagement from './pages/products-master-data/AttributeManagement';
-import AttributeForm from './pages/products-master-data/AttributeForm';
-import TaxMaster from './pages/products-master-data/TaxMaster';
-import TaxForm from './pages/products-master-data/TaxForm';
-import SupplierManagement from './pages/products-master-data/SupplierManagement';
-import SupplierForm from './pages/products-master-data/SupplierForm';
-import PriceListManagement from './pages/products-master-data/PriceListManagement';
-import PriceListForm from './pages/products-master-data/PriceListForm';
-import ProductImport from './pages/products-master-data/ProductImport';
-import ProductSettings from './pages/products-master-data/ProductSettings';
+const ProductsDashboard = React.lazy(() => import('./pages/products-master-data/ProductsDashboard'));
+const ItemManagement = React.lazy(() => import('./pages/products-master-data/ItemManagement'));
+const ItemForm = React.lazy(() => import('./pages/products-master-data/ItemForm'));
+const ItemGroupManagement = React.lazy(() => import('./pages/products-master-data/ItemGroupManagement'));
+const ItemGroupForm = React.lazy(() => import('./pages/products-master-data/ItemGroupForm'));
+const BrandManagement = React.lazy(() => import('./pages/products-master-data/BrandManagement'));
+const BrandForm = React.lazy(() => import('./pages/products-master-data/BrandForm'));
+const UOMManagement = React.lazy(() => import('./pages/products-master-data/UOMManagement'));
+const UOMForm = React.lazy(() => import('./pages/products-master-data/UOMForm'));
+const AttributeManagement = React.lazy(() => import('./pages/products-master-data/AttributeManagement'));
+const AttributeForm = React.lazy(() => import('./pages/products-master-data/AttributeForm'));
+const TaxMaster = React.lazy(() => import('./pages/products-master-data/TaxMaster'));
+const TaxForm = React.lazy(() => import('./pages/products-master-data/TaxForm'));
+const SupplierManagement = React.lazy(() => import('./pages/products-master-data/SupplierManagement'));
+const SupplierForm = React.lazy(() => import('./pages/products-master-data/SupplierForm'));
+const PriceListManagement = React.lazy(() => import('./pages/products-master-data/PriceListManagement'));
+const PriceListForm = React.lazy(() => import('./pages/products-master-data/PriceListForm'));
+const ProductImport = React.lazy(() => import('./pages/products-master-data/ProductImport'));
+const ProductSettings = React.lazy(() => import('./pages/products-master-data/ProductSettings'));
 
 // Purchase & Procurement
-import PurchaseDashboard from './pages/purchase-procurement/PurchaseDashboard';
-import RFQManagement from './pages/purchase-procurement/RFQManagement';
-import RFQForm from './pages/purchase-procurement/RFQForm';
-import QuotationComparison from './pages/purchase-procurement/QuotationComparison';
-import PurchaseOrderManagement from './pages/purchase-procurement/PurchaseOrderManagement';
-import PurchaseOrderForm from './pages/purchase-procurement/PurchaseOrderForm';
-import GRNManagement from './pages/purchase-procurement/GRNManagement';
-import GRNForm from './pages/purchase-procurement/GRNForm';
-import PurchaseInvoiceManagement from './pages/purchase-procurement/PurchaseInvoiceManagement';
-import PurchaseInvoiceForm from './pages/purchase-procurement/PurchaseInvoiceForm';
-import SupplierPaymentManagement from './pages/purchase-procurement/SupplierPaymentManagement';
-import SupplierPaymentForm from './pages/purchase-procurement/SupplierPaymentForm';
-import PurchaseReturnManagement from './pages/purchase-procurement/PurchaseReturnManagement';
-import PurchaseReturnForm from './pages/purchase-procurement/PurchaseReturnForm';
-import SupplierPerformance from './pages/purchase-procurement/SupplierPerformance';
-import ProcurementReports from './pages/purchase-procurement/ProcurementReports';
-import PurchaseSettings from './pages/purchase-procurement/PurchaseSettings';
+const PurchaseDashboard = React.lazy(() => import('./pages/purchase-procurement/PurchaseDashboard'));
+const RFQManagement = React.lazy(() => import('./pages/purchase-procurement/RFQManagement'));
+const RFQForm = React.lazy(() => import('./pages/purchase-procurement/RFQForm'));
+const QuotationComparison = React.lazy(() => import('./pages/purchase-procurement/QuotationComparison'));
+const PurchaseOrderManagement = React.lazy(() => import('./pages/purchase-procurement/PurchaseOrderManagement'));
+const PurchaseOrderForm = React.lazy(() => import('./pages/purchase-procurement/PurchaseOrderForm'));
+const GRNManagement = React.lazy(() => import('./pages/purchase-procurement/GRNManagement'));
+const GRNForm = React.lazy(() => import('./pages/purchase-procurement/GRNForm'));
+const PurchaseInvoiceManagement = React.lazy(() => import('./pages/purchase-procurement/PurchaseInvoiceManagement'));
+const PurchaseInvoiceForm = React.lazy(() => import('./pages/purchase-procurement/PurchaseInvoiceForm'));
+const SupplierPaymentManagement = React.lazy(() => import('./pages/purchase-procurement/SupplierPaymentManagement'));
+const SupplierPaymentForm = React.lazy(() => import('./pages/purchase-procurement/SupplierPaymentForm'));
+const PurchaseReturnManagement = React.lazy(() => import('./pages/purchase-procurement/PurchaseReturnManagement'));
+const PurchaseReturnForm = React.lazy(() => import('./pages/purchase-procurement/PurchaseReturnForm'));
+const SupplierPerformance = React.lazy(() => import('./pages/purchase-procurement/SupplierPerformance'));
+const ProcurementReports = React.lazy(() => import('./pages/purchase-procurement/ProcurementReports'));
+const PurchaseSettings = React.lazy(() => import('./pages/purchase-procurement/PurchaseSettings'));
 
 // Projects & Installation
-import ProjectDashboard from './pages/projects-installation/ProjectDashboard';
-import ProjectManagement from './pages/projects-installation/ProjectManagement';
-import ProjectForm from './pages/projects-installation/ProjectForm';
-import ProjectDetails from './pages/projects-installation/ProjectDetails';
-import ProjectBOQManagement from './pages/projects-installation/BOQManagement';
-import ProjectBOQForm from './pages/projects-installation/BOQForm';
-import TaskManagement from './pages/projects-installation/TaskManagement';
-import TaskForm from './pages/projects-installation/TaskForm';
-import SiteReportManagement from './pages/projects-installation/SiteReportManagement';
-import SiteReportForm from './pages/projects-installation/SiteReportForm';
-import MilestoneManagement from './pages/projects-installation/MilestoneManagement';
-import MilestoneForm from './pages/projects-installation/MilestoneForm';
-import DocumentManagement from './pages/projects-installation/DocumentManagement';
-import DocumentForm from './pages/projects-installation/DocumentForm';
-import ResourceManagement from './pages/projects-installation/ResourceManagement';
-import ResourceForm from './pages/projects-installation/ResourceForm';
-import ProjectFinancials from './pages/projects-installation/ProjectFinancials';
-import ProjectSettings from './pages/projects-installation/ProjectSettings';
+const ProjectDashboard = React.lazy(() => import('./pages/projects-installation/ProjectDashboard'));
+const ProjectManagement = React.lazy(() => import('./pages/projects-installation/ProjectManagement'));
+const ProjectForm = React.lazy(() => import('./pages/projects-installation/ProjectForm'));
+const ProjectDetails = React.lazy(() => import('./pages/projects-installation/ProjectDetails'));
+const ProjectBOQManagement = React.lazy(() => import('./pages/projects-installation/BOQManagement'));
+const ProjectBOQForm = React.lazy(() => import('./pages/projects-installation/BOQForm'));
+const TaskManagement = React.lazy(() => import('./pages/projects-installation/TaskManagement'));
+const TaskForm = React.lazy(() => import('./pages/projects-installation/TaskForm'));
+const SiteReportManagement = React.lazy(() => import('./pages/projects-installation/SiteReportManagement'));
+const SiteReportForm = React.lazy(() => import('./pages/projects-installation/SiteReportForm'));
+const MilestoneManagement = React.lazy(() => import('./pages/projects-installation/MilestoneManagement'));
+const MilestoneForm = React.lazy(() => import('./pages/projects-installation/MilestoneForm'));
+const DocumentManagement = React.lazy(() => import('./pages/projects-installation/DocumentManagement'));
+const DocumentForm = React.lazy(() => import('./pages/projects-installation/DocumentForm'));
+const ResourceManagement = React.lazy(() => import('./pages/projects-installation/ResourceManagement'));
+const ResourceForm = React.lazy(() => import('./pages/projects-installation/ResourceForm'));
+const ProjectFinancials = React.lazy(() => import('./pages/projects-installation/ProjectFinancials'));
+const ProjectSettings = React.lazy(() => import('./pages/projects-installation/ProjectSettings'));
 
 // Inventory & Logistics
-import InventoryDashboard from './pages/inventory-logistics/InventoryDashboard';
-import WarehouseManagement from './pages/inventory-logistics/WarehouseManagement';
-import WarehouseForm from './pages/inventory-logistics/WarehouseForm';
-import StockLedgerManagement from './pages/inventory-logistics/StockLedgerManagement';
-import StockLedgerForm from './pages/inventory-logistics/StockLedgerForm';
-import MaterialReceiptManagement from './pages/inventory-logistics/MaterialReceiptManagement';
-import MaterialReceiptForm from './pages/inventory-logistics/MaterialReceiptForm';
-import MaterialIssueManagement from './pages/inventory-logistics/MaterialIssueManagement';
-import MaterialIssueForm from './pages/inventory-logistics/MaterialIssueForm';
-import StockTransferManagement from './pages/inventory-logistics/StockTransferManagement';
-import StockTransferForm from './pages/inventory-logistics/StockTransferForm';
-import StockReconciliationManagement from './pages/inventory-logistics/StockReconciliationManagement';
-import StockReconciliationForm from './pages/inventory-logistics/StockReconciliationForm';
-import DeliveryManagement from './pages/inventory-logistics/DeliveryManagement';
-import DeliveryForm from './pages/inventory-logistics/DeliveryForm';
-import ReturnsManagement from './pages/inventory-logistics/ReturnsManagement';
-import ReturnsForm from './pages/inventory-logistics/ReturnsForm';
-import InventoryReports from './pages/inventory-logistics/InventoryReports';
-import InventorySettings from './pages/inventory-logistics/InventorySettings';
+const InventoryDashboard = React.lazy(() => import('./pages/inventory-logistics/InventoryDashboard'));
+const WarehouseManagement = React.lazy(() => import('./pages/inventory-logistics/WarehouseManagement'));
+const WarehouseForm = React.lazy(() => import('./pages/inventory-logistics/WarehouseForm'));
+const StockLedgerManagement = React.lazy(() => import('./pages/inventory-logistics/StockLedgerManagement'));
+const StockLedgerForm = React.lazy(() => import('./pages/inventory-logistics/StockLedgerForm'));
+const MaterialReceiptManagement = React.lazy(() => import('./pages/inventory-logistics/MaterialReceiptManagement'));
+const MaterialReceiptForm = React.lazy(() => import('./pages/inventory-logistics/MaterialReceiptForm'));
+const MaterialIssueManagement = React.lazy(() => import('./pages/inventory-logistics/MaterialIssueManagement'));
+const MaterialIssueForm = React.lazy(() => import('./pages/inventory-logistics/MaterialIssueForm'));
+const StockTransferManagement = React.lazy(() => import('./pages/inventory-logistics/StockTransferManagement'));
+const StockTransferForm = React.lazy(() => import('./pages/inventory-logistics/StockTransferForm'));
+const StockReconciliationManagement = React.lazy(() => import('./pages/inventory-logistics/StockReconciliationManagement'));
+const StockReconciliationForm = React.lazy(() => import('./pages/inventory-logistics/StockReconciliationForm'));
+const DeliveryManagement = React.lazy(() => import('./pages/inventory-logistics/DeliveryManagement'));
+const DeliveryForm = React.lazy(() => import('./pages/inventory-logistics/DeliveryForm'));
+const ReturnsManagement = React.lazy(() => import('./pages/inventory-logistics/ReturnsManagement'));
+const ReturnsForm = React.lazy(() => import('./pages/inventory-logistics/ReturnsForm'));
+const InventoryReports = React.lazy(() => import('./pages/inventory-logistics/InventoryReports'));
+const InventorySettings = React.lazy(() => import('./pages/inventory-logistics/InventorySettings'));
 
 // Service & AMC
-import ServiceDashboard from './pages/service-amc/ServiceDashboard';
-import ServiceRequestManagement from './pages/service-amc/ServiceRequestManagement';
-import ServiceRequestForm from './pages/service-amc/ServiceRequestForm';
-import ServiceCallManagement from './pages/service-amc/ServiceCallManagement';
-import ServiceCallForm from './pages/service-amc/ServiceCallForm';
-import TechnicianAssignmentManagement from './pages/service-amc/TechnicianAssignmentManagement';
-import TechnicianAssignmentForm from './pages/service-amc/TechnicianAssignmentForm';
-import PreventiveMaintenanceManagement from './pages/service-amc/PreventiveMaintenanceManagement';
-import PreventiveMaintenanceForm from './pages/service-amc/PreventiveMaintenanceForm';
-import AMCManagement from './pages/service-amc/AMCManagement';
-import AMCForm from './pages/service-amc/AMCForm';
-import BreakdownManagement from './pages/service-amc/BreakdownManagement';
-import BreakdownForm from './pages/service-amc/BreakdownForm';
-import ServiceClosureManagement from './pages/service-amc/ServiceClosureManagement';
-import ServiceClosureForm from './pages/service-amc/ServiceClosureForm';
+const ServiceDashboard = React.lazy(() => import('./pages/service-amc/ServiceDashboard'));
+const ServiceRequestManagement = React.lazy(() => import('./pages/service-amc/ServiceRequestManagement'));
+const ServiceRequestForm = React.lazy(() => import('./pages/service-amc/ServiceRequestForm'));
+const ServiceCallManagement = React.lazy(() => import('./pages/service-amc/ServiceCallManagement'));
+const ServiceCallForm = React.lazy(() => import('./pages/service-amc/ServiceCallForm'));
+const TechnicianAssignmentManagement = React.lazy(() => import('./pages/service-amc/TechnicianAssignmentManagement'));
+const TechnicianAssignmentForm = React.lazy(() => import('./pages/service-amc/TechnicianAssignmentForm'));
+const PreventiveMaintenanceManagement = React.lazy(() => import('./pages/service-amc/PreventiveMaintenanceManagement'));
+const PreventiveMaintenanceForm = React.lazy(() => import('./pages/service-amc/PreventiveMaintenanceForm'));
+const AMCManagement = React.lazy(() => import('./pages/service-amc/AMCManagement'));
+const AMCForm = React.lazy(() => import('./pages/service-amc/AMCForm'));
+const BreakdownManagement = React.lazy(() => import('./pages/service-amc/BreakdownManagement'));
+const BreakdownForm = React.lazy(() => import('./pages/service-amc/BreakdownForm'));
+const ServiceClosureManagement = React.lazy(() => import('./pages/service-amc/ServiceClosureManagement'));
+const ServiceClosureForm = React.lazy(() => import('./pages/service-amc/ServiceClosureForm'));
 
 // Assets & Installed Base
-import AssetDashboard from './pages/assets-installed-base/AssetDashboard';
-import AssetRegistryManagement from './pages/assets-installed-base/AssetRegistryManagement';
-import AssetRegistryForm from './pages/assets-installed-base/AssetRegistryForm';
-import WarrantyAMCManagement from './pages/assets-installed-base/WarrantyAMCManagement';
-import WarrantyAMCForm from './pages/assets-installed-base/WarrantyAMCForm';
-import ServiceHistoryManagement from './pages/assets-installed-base/ServiceHistoryManagement';
-import ServiceHistoryForm from './pages/assets-installed-base/ServiceHistoryForm';
-import AssetLocationsManagement from './pages/assets-installed-base/AssetLocationsManagement';
-import AssetLocationsForm from './pages/assets-installed-base/AssetLocationsForm';
-import AssetsReports from './pages/assets-installed-base/AssetsReports';
+const AssetDashboard = React.lazy(() => import('./pages/assets-installed-base/AssetDashboard'));
+const AssetRegistryManagement = React.lazy(() => import('./pages/assets-installed-base/AssetRegistryManagement'));
+const AssetRegistryForm = React.lazy(() => import('./pages/assets-installed-base/AssetRegistryForm'));
+const WarrantyAMCManagement = React.lazy(() => import('./pages/assets-installed-base/WarrantyAMCManagement'));
+const WarrantyAMCForm = React.lazy(() => import('./pages/assets-installed-base/WarrantyAMCForm'));
+const ServiceHistoryManagement = React.lazy(() => import('./pages/assets-installed-base/ServiceHistoryManagement'));
+const ServiceHistoryForm = React.lazy(() => import('./pages/assets-installed-base/ServiceHistoryForm'));
+const AssetLocationsManagement = React.lazy(() => import('./pages/assets-installed-base/AssetLocationsManagement'));
+const AssetLocationsForm = React.lazy(() => import('./pages/assets-installed-base/AssetLocationsForm'));
+const AssetsReports = React.lazy(() => import('./pages/assets-installed-base/AssetsReports'));
 
 // MIS & Management
-import MISDashboard from './pages/mis-management/MISDashboard';
-import ReportsManagement from './pages/mis-management/ReportsManagement';
-import ReportsForm from './pages/mis-management/ReportsForm';
-import BudgetPlanningManagement from './pages/mis-management/BudgetPlanningManagement';
-import BudgetPlanningForm from './pages/mis-management/BudgetPlanningForm';
-import KPIsScorecardsManagement from './pages/mis-management/KPIsScorecardsManagement';
-import KPIsScorecardsForm from './pages/mis-management/KPIsScorecardsForm';
-import ManagementReviewManagement from './pages/mis-management/ManagementReviewManagement';
-import ManagementReviewForm from './pages/mis-management/ManagementReviewForm';
-import Analytics from './pages/mis-management/Analytics';
-import DataExport from './pages/mis-management/DataExport';
+const MISDashboard = React.lazy(() => import('./pages/mis-management/MISDashboard'));
+const ReportsManagement = React.lazy(() => import('./pages/mis-management/ReportsManagement'));
+const ReportsForm = React.lazy(() => import('./pages/mis-management/ReportsForm'));
+const BudgetPlanningManagement = React.lazy(() => import('./pages/mis-management/BudgetPlanningManagement'));
+const BudgetPlanningForm = React.lazy(() => import('./pages/mis-management/BudgetPlanningForm'));
+const KPIsScorecardsManagement = React.lazy(() => import('./pages/mis-management/KPIsScorecardsManagement'));
+const KPIsScorecardsForm = React.lazy(() => import('./pages/mis-management/KPIsScorecardsForm'));
+const ManagementReviewManagement = React.lazy(() => import('./pages/mis-management/ManagementReviewManagement'));
+const ManagementReviewForm = React.lazy(() => import('./pages/mis-management/ManagementReviewForm'));
+const Analytics = React.lazy(() => import('./pages/mis-management/Analytics'));
+const DataExport = React.lazy(() => import('./pages/mis-management/DataExport'));
 
 import Layout from './components/Layout';
 
 function App() {
   return (
     <Router>
-      <Routes>
+      <Toaster position="top-right" />
+      <Suspense fallback={<Loader />}><Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/change-password" element={<ChangePassword />} />
         
         {/* Protected routes wrapped in Layout */}
         <Route path="/" element={<Layout />}>
@@ -453,7 +458,7 @@ function App() {
         </Route>
 
         <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
+      </Routes></Suspense>
     </Router>
   );
 }

@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -42,6 +44,7 @@ export default function SiteReportForm() {
       } else {
         await axios.post(`/api/projects/site-reports`, formData, { withCredentials: true });
       }
+      toast.success('Saved successfully!');
       navigate('/modules/projects-installation/site-reports');
     } catch (err) {
       console.error(err);

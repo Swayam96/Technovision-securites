@@ -42,8 +42,9 @@ async function punchCheckOut(employeeId, workDate, when) {
 async function listTeamAttendance(workDate) {
     return await fetchAll(`
         SELECT e.id, e.employee_name, e.username,
-               a.check_in, a.check_out
+               a.check_in, a.check_out, s.start_time, s.end_time
         FROM employees e
+        LEFT JOIN shifts s ON s.id = e.shift_id
         LEFT JOIN attendance_days a
           ON a.employee_id = e.id AND a.work_date = ?
         ORDER BY e.employee_name

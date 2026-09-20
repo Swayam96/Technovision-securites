@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -44,6 +46,7 @@ export default function AssetRegistryForm() {
       } else {
         await axios.post(`/api/assets/asset-registry`, formData, { withCredentials: true });
       }
+      toast.success('Saved successfully!');
       navigate('/modules/assets-installed-base/asset-registry');
     } catch (err) {
       console.error(err);
