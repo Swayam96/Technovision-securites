@@ -16,15 +16,22 @@ export default function Layout() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const userRes = await axios.get('/api/me', { withCredentials: true });
+        const userRes = await axios.get('/api/me', { withCredentials: true, cache: false });
         setUser(userRes.data.user);
-        
-        // We reuse the dashboard endpoint for now because it returns navModules
-        const dashRes = await axios.get('/api/dashboard', { withCredentials: true });
-        setData(dashRes.data);
       } catch (err) {
         console.error("Auth error in layout:", err);
         navigate('/login');
+        return;
+      }
+
+      try {
+        // We reuse the dashboard endpoint for now because it returns navModules
+        const dashRes = await axios.get('/api/dashboard', { withCredentials: true, cache: false });
+        setData(dashRes.data);
+      } catch (err) {
+        console.error("Dashboard data load error in layout:", err);
+        // Fallback with empty structure so authenticated user can still use the app
+        setData({ navModules: [], counts: {}, stats: {} });
       } finally {
         setLoading(false);
       }

@@ -9,6 +9,9 @@ require('dotenv').config();
 
 const app = express();
 
+// Trust reverse proxy (Render, Heroku, Cloudflare) so Express knows it's on HTTPS (X-Forwarded-Proto)
+app.set('trust proxy', 1);
+
 app.use(cors({
     origin: function (origin, callback) {
         // Allow any origin
@@ -38,11 +41,12 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'technovision-erp-dev-secret-change-me',
     resave: false,
     saveUninitialized: false,
+    proxy: true, // Tells express-session to trust reverse proxy headers
     cookie: { 
         maxAge: 1000 * 60 * 60 * 12, // 12 hours
         httpOnly: true,
-        secure: isProduction,           // Must be true on HTTPS (Render)
-        sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin in production
+        secure: isProduction ? true : 'auto', // True in production HTTPS, auto in dev
+        sameSite: 'lax',                      // Standard for same-origin monolith; never blocked by Chrome
     }
 }));
 

@@ -18,7 +18,7 @@ export default function Login() {
       }, { withCredentials: true });
 
       if (response.data.redirect) {
-        navigate(response.data.redirect);
+        window.location.href = response.data.redirect;
       }
     } catch (err) {
       console.error('Login error details:', err);
