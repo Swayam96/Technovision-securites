@@ -27,6 +27,8 @@ app.use(cookieParser());
 const pgSession = require('connect-pg-simple')(session);
 const { pool } = require('./db');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 app.use(session({
     store: new pgSession({
         pool: pool,
@@ -39,7 +41,8 @@ app.use(session({
     cookie: { 
         maxAge: 1000 * 60 * 60 * 12, // 12 hours
         httpOnly: true,
-        sameSite: 'lax',
+        secure: isProduction,           // Must be true on HTTPS (Render)
+        sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin in production
     }
 }));
 
