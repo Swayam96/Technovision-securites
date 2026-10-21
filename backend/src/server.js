@@ -112,23 +112,6 @@ app.get('/health', async (req, res) => {
     }
 });
 
-// Temporary debug endpoint - remove after fixing
-app.get('/api/debug-db', async (req, res) => {
-    const { pool } = require('./db');
-    const results = {};
-    const tables = ['users', 'session', 'employees', 'org_roles', 'user_permissions'];
-    for (const table of tables) {
-        try {
-            const r = await pool.query(`SELECT COUNT(*) as cnt FROM ${table}`);
-            results[table] = { ok: true, count: r.rows[0].cnt };
-        } catch (e) {
-            results[table] = { ok: false, error: e.message };
-        }
-    }
-    res.json({ env: process.env.NODE_ENV, tables: results });
-});
-
-
 // Serve frontend in production
 app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 

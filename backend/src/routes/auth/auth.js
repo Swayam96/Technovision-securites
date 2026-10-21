@@ -5,17 +5,12 @@ const { verifyPassword } = require('../../auth');
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    let step = 'start';
     try {
-        step = 'normalize';
         const normalizedUsername = (username || '').trim().toLowerCase();
-        step = 'getUserByUsername';
         const row = await getUserByUsername(normalizedUsername);
-        step = 'verifyPassword';
         if (!row || !row.is_active || !verifyPassword(password, row.password_hash)) {
             return res.status(401).json({ error: 'Invalid username or password.' });
         }
-        step = 'saveSession';
         req.session.user_id = row.id;
         
         if (row.must_change_password) {
@@ -24,8 +19,8 @@ router.post('/login', async (req, res) => {
         
         return res.json({ redirect: '/', user_id: row.id });
     } catch (e) {
-        console.error('Login error at step [' + step + ']:', e);
-        return res.status(500).json({ error: 'Internal server error', step, detail: e.message });
+        console.error('Login error:', e);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 });
 
