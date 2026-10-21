@@ -11,7 +11,17 @@ router.post('/login', async (req, res) => {
         if (!row || !row.is_active || !verifyPassword(password, row.password_hash)) {
             return res.status(401).json({ error: 'Invalid username or password.' });
         }
+        
         req.session.user_id = row.id;
+
+        // Explicitly save session before responding so it's in the DB
+        // before the client makes the next request (/api/me)
+        await new Promise((resolve, reject) => {
+            req.session.save((err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
         
         if (row.must_change_password) {
             return res.json({ redirect: '/change-password', user_id: row.id });
