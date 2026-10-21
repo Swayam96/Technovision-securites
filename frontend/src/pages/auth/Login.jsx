@@ -7,20 +7,25 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setError('');
+
     try {
       const response = await axios.post('/api/login', {
         username,
         password
       }, { withCredentials: true });
 
-      if (response.data.redirect) {
-        window.location.href = response.data.redirect;
-      }
+      const redirectUrl = response.data && response.data.redirect ? response.data.redirect : '/';
+      window.location.href = redirectUrl;
     } catch (err) {
+      setIsSubmitting(false);
       console.error('Login error details:', err);
       if (err.response) {
          console.error('Response data:', err.response.data);
@@ -135,7 +140,9 @@ export default function Login() {
                <a href="#" className="forgot-pwd">Forgot Password?</a>
             </div>
 
-            <button className="btn-primary" type="submit">Login &rarr;</button>
+            <button className="btn-primary" type="submit" disabled={isSubmitting} style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}>
+              {isSubmitting ? 'Logging in...' : 'Login \u2192'}
+            </button>
           </form>
         </div>
         
